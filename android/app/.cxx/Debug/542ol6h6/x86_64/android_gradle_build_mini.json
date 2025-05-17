@@ -1,0 +1,20 @@
+{
+  "buildFiles": [
+    "/home/asher/src/flutter_linux_3.22.2-stable/flutter/packages/flutter_tools/gradle/src/main/groovy/CMakeLists.txt"
+  ],
+  "cleanCommandsComponents": [
+    [
+      "/usr/bin/ninja",
+      "-C",
+      "/media/asher/Extra/GRINDING/freelance/projects/mango_app/farm-fresh-app/android/app/.cxx/Debug/542ol6h6/x86_64",
+      "clean"
+    ]
+  ],
+  "buildTargetsCommandComponents": [
+    "/usr/bin/ninja",
+    "-C",
+    "/media/asher/Extra/GRINDING/freelance/projects/mango_app/farm-fresh-app/android/app/.cxx/Debug/542ol6h6/x86_64",
+    "{LIST_OF_TARGETS_TO_BUILD}"
+  ],
+  "libraries": {}
+}
