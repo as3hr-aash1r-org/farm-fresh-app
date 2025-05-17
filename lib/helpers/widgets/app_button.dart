@@ -1,0 +1,56 @@
+import 'package:flutter/material.dart';
+
+class AppButton extends StatelessWidget {
+  final String text;
+  final VoidCallback onPressed;
+  final double height;
+  final BorderRadius? borderRadius;
+  final bool isLoading;
+
+  const AppButton({
+    Key? key,
+    required this.text,
+    required this.onPressed,
+    this.isLoading = false,
+    this.height = 56,
+    this.borderRadius,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      height: height,
+      decoration: BoxDecoration(
+        borderRadius: borderRadius ?? BorderRadius.circular(12),
+        gradient: LinearGradient(
+          colors: [
+            const Color(0xFFFF8B83),
+            const Color(0xFFFF621F),
+          ],
+        ),
+      ),
+      child: ElevatedButton(
+        onPressed: onPressed,
+        style: ElevatedButton.styleFrom(
+          backgroundColor: Colors.transparent,
+          shadowColor: Colors.transparent,
+          shape: RoundedRectangleBorder(
+            borderRadius: borderRadius ?? BorderRadius.circular(28),
+          ),
+        ),
+        child: isLoading
+            ? Center(
+                child: const CircularProgressIndicator(color: Colors.white))
+            : Text(
+                text,
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
+              ),
+      ),
+    );
+  }
+}

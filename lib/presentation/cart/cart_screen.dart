@@ -1,8 +1,8 @@
 import 'package:farm_fresh_shop_app/helpers/styles/app_color.dart';
+import 'package:farm_fresh_shop_app/navigation/app_navigation.dart';
+import 'package:farm_fresh_shop_app/navigation/route_name.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../di/service_locator.dart';
 import 'components/cart_book_container.dart';
 import 'cart_cubit.dart';
 import 'cart_state.dart';
@@ -10,15 +10,12 @@ import 'cart_state.dart';
 class CartScreen extends StatelessWidget {
   const CartScreen({super.key});
 
-  static final cartCubit = sl<CartCubit>();
-
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<CartCubit, CartState>(
-      bloc: cartCubit,
       builder: (context, state) {
+        final cartCubit = context.read<CartCubit>();
         final totalPrice = cartCubit.totalPrice;
-
         return Scaffold(
           appBar: AppBar(
             backgroundColor: Colors.white,
@@ -40,8 +37,9 @@ class CartScreen extends StatelessWidget {
                                 cartCubit.removeBookFromCart(book),
                             onIncrease: () => cartCubit.increaseQuantity(book),
                             onDecrease: () => cartCubit.decreaseQuantity(book),
-                            onTap: () => cartCubit.cartNavigator
-                                .navigateToBookDetail(book),
+                            onTap: () => AppNavigation.push(
+                                RouteName.bookDetails,
+                                arguments: {'book': book}),
                           );
                         },
                       ),
@@ -84,7 +82,7 @@ class CartScreen extends StatelessWidget {
                               ),
                             ),
                             onPressed: () {
-                              cartCubit.cartNavigator.openCheckOut();
+                              AppNavigation.push(RouteName.checkout);
                             },
                             child: const Text(
                               "Proceed to Checkout",

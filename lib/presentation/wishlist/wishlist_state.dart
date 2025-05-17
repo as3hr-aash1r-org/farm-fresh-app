@@ -1,7 +1,7 @@
-import '../../domain/entities/book_entity.dart';
+import 'package:farm_fresh_shop_app/data/model/product_json.dart';
 
 class WishlistState {
-  final List<BookEntity> books;
+  final List<ProductModel> books;
 
   WishlistState({
     required this.books,
@@ -10,7 +10,7 @@ class WishlistState {
   factory WishlistState.empty() => WishlistState(books: []);
 
   WishlistState copyWith({
-    List<BookEntity>? books,
+    List<ProductModel>? books,
   }) {
     return WishlistState(
       books: books ?? this.books,

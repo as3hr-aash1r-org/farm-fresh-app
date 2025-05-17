@@ -1,4 +1,4 @@
-import 'package:farm_fresh_shop_app/domain/entities/book_entity.dart';
+import 'package:farm_fresh_shop_app/data/model/product_json.dart';
 import 'package:flutter/material.dart';
 
 import '../../../helpers/styles/app_color.dart';
@@ -11,7 +11,7 @@ class WishlistBookContainer extends StatelessWidget {
     required this.onTap,
   });
 
-  final BookEntity book;
+  final ProductModel book;
   final VoidCallback onRemoveTap;
   final VoidCallback onTap;
 
@@ -52,7 +52,7 @@ class WishlistBookContainer extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    book.title ?? 'Unknown Title',
+                    book.name ?? 'Unknown Title',
                     style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 16,
@@ -62,7 +62,7 @@ class WishlistBookContainer extends StatelessWidget {
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    book.author ?? 'Unknown Author',
+                    book.description ?? 'Unknown Author',
                     style: const TextStyle(
                       fontSize: 14,
                       color: Colors.grey,

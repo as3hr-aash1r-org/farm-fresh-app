@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 class AppNavigation {
   static final navigatorKey = GlobalKey<NavigatorState>();
   static final context = navigatorKey.currentState!.context;
-  void push(String routeName, {arguments}) {
+  static void push(String routeName, {arguments}) {
     Navigator.pushNamed(
       context,
       routeName,
@@ -12,15 +12,15 @@ class AppNavigation {
     );
   }
 
-  pop() {
+  static void pop() {
     Navigator.pop(context);
   }
 
-  exitApp() async {
+  static void exitApp() async {
     SystemChannels.platform.invokeMethod('SystemNavigator.pop');
   }
 
-  pushReplacement(String routeName, {arguments}) {
+  static void pushReplacement(String routeName, {arguments}) {
     Navigator.pushReplacementNamed(
       context,
       routeName,
@@ -28,7 +28,7 @@ class AppNavigation {
     );
   }
 
-  getToLast() {
+  static getToLast() {
     Navigator.popUntil(context, (route) => route.isFirst);
   }
 }

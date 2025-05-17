@@ -1,15 +1,14 @@
 // ignore_for_file: unused_local_variable
 
 import 'package:farm_fresh_shop_app/navigation/route_name.dart';
+import 'package:farm_fresh_shop_app/presentation/auth/login/login_screen.dart';
+import 'package:farm_fresh_shop_app/presentation/auth/register/register_screen.dart';
 import 'package:farm_fresh_shop_app/presentation/bottom_bar/bottom_bar.dart';
 import 'package:farm_fresh_shop_app/presentation/cart/cart_screen.dart';
 import 'package:farm_fresh_shop_app/presentation/cart/components/checkout/checkout_screen.dart';
 import 'package:farm_fresh_shop_app/presentation/cart/components/order_success.dart';
 import 'package:farm_fresh_shop_app/presentation/on_boarding/on_boarding_screen.dart';
-import 'package:farm_fresh_shop_app/presentation/read_book/read_book_screen.dart';
 import 'package:flutter/material.dart';
-
-import '../di/service_locator.dart';
 import '../presentation/book_details/book_details_screen.dart';
 
 enum TransitionType {
@@ -24,9 +23,13 @@ Route<dynamic> generateRoute(RouteSettings settings) {
   switch (settings.name) {
     case RouteName.splash:
       return getRoute(const OnboardingScreen(), TransitionType.fade);
+    case RouteName.login:
+      return getRoute(const LoginScreen(), TransitionType.fade);
+    case RouteName.register:
+      return getRoute(const RegisterScreen(), TransitionType.fade);
 
     case RouteName.bottomBar:
-      return getRoute(BottomBar(cubit: sl()), TransitionType.fade);
+      return getRoute(BottomBar(), TransitionType.fade);
 
     case RouteName.cart:
       return getRoute(const CartScreen(), TransitionType.fade);
@@ -41,21 +44,10 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     case RouteName.bookDetails:
       return getRoute(
         BookDetailsScreen(
-          cubit: sl(
-            param1: args["book"],
-          ),
+          book: args["book"],
         ),
         TransitionType.slide,
       );
-
-    case RouteName.bookReader:
-      return getRoute(
-          ReadBookScreen(
-            cubit: sl(
-              param1: args["book"],
-            ),
-          ),
-          TransitionType.fade);
 
     default:
       return MaterialPageRoute(

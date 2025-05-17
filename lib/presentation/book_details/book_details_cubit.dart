@@ -1,18 +1,14 @@
-import 'package:bloc/bloc.dart';
-import 'package:farm_fresh_shop_app/domain/entities/book_entity.dart';
+import 'package:farm_fresh_shop_app/data/model/product_json.dart';
 import 'package:farm_fresh_shop_app/helpers/utils.dart';
-import 'package:farm_fresh_shop_app/presentation/book_details/book_details_navigator.dart';
 import 'package:farm_fresh_shop_app/presentation/book_details/book_details_state.dart';
 import 'package:farm_fresh_shop_app/presentation/wishlist/wishlist_cubit.dart';
-
-import '../../di/service_locator.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import '../cart/cart_cubit.dart';
 
 class BookDetailsCubit extends Cubit<BookDetailsState> {
-  final BookEntity params;
-  final BookDetailNavigator navigator;
-  BookDetailsCubit(this.params, this.navigator)
-      : super(BookDetailsState.empty()) {
+  final ProductModel params;
+  BookDetailsCubit(this.params) : super(BookDetailsState.empty()) {
     setBookDetails();
   }
 
@@ -20,8 +16,8 @@ class BookDetailsCubit extends Cubit<BookDetailsState> {
     emit(state.copyWith(book: params));
   }
 
-  void onAddToWishlistTap() {
-    final wishListCubit = sl<WishlistCubit>();
+  void onAddToWishlistTap(BuildContext context) {
+    final wishListCubit = context.read<WishlistCubit>();
     if (wishListCubit.state.books.contains(params)) {
       wishListCubit.removeBookFromWishlist(params);
       showToast('Book removed from wishlist');
@@ -32,8 +28,8 @@ class BookDetailsCubit extends Cubit<BookDetailsState> {
     emit(state.copyWith(book: params));
   }
 
-  void onAddToCartTap() {
-    final cartCubit = sl<CartCubit>();
+  void onAddToCartTap(BuildContext context) {
+    final cartCubit = context.read<CartCubit>();
     if (cartCubit.state.books.contains(params)) {
       showToast('Book already in cart');
       return;

@@ -1,10 +1,8 @@
-import 'package:farm_fresh_shop_app/di/service_locator.dart';
 import 'package:farm_fresh_shop_app/helpers/styles/app_images.dart';
+import 'package:farm_fresh_shop_app/navigation/app_navigation.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-
 import '../../../helpers/styles/app_color.dart';
-import '../cart_cubit.dart';
 
 class OrderSuccessScreen extends StatelessWidget {
   final double amount;
@@ -148,7 +146,7 @@ class OrderSuccessScreen extends StatelessWidget {
                   Expanded(
                     child: ElevatedButton(
                       onPressed: () {
-                        sl<CartCubit>().cartNavigator.backToHome();
+                        AppNavigation.getToLast();
                       },
                       style: ElevatedButton.styleFrom(
                         padding: const EdgeInsets.symmetric(vertical: 16),

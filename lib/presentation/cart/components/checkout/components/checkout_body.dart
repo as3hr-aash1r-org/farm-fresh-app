@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../../../../di/service_locator.dart';
 import '../../../../../helpers/styles/app_color.dart';
 import '../../../cart_cubit.dart';
 import '../../../cart_state.dart';
@@ -9,19 +7,16 @@ import '../../../cart_state.dart';
 class CheckoutBody extends StatelessWidget {
   const CheckoutBody({super.key});
 
-  static final cartCubit = sl<CartCubit>();
-
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<CartCubit, CartState>(
-      bloc: cartCubit,
       builder: (context, state) {
         return Expanded(
           child: ListView.builder(
             padding: const EdgeInsets.all(16),
-            itemCount: cartCubit.state.books.length,
+            itemCount: state.books.length,
             itemBuilder: (context, index) {
-              final book = cartCubit.state.books[index];
+              final book = state.books[index];
               return Container(
                 margin: const EdgeInsets.only(bottom: 12),
                 padding: const EdgeInsets.all(12),
@@ -55,7 +50,7 @@ class CheckoutBody extends StatelessWidget {
                           Row(
                             children: [
                               Text(
-                                book.title ?? 'Unknown Title',
+                                book.name ?? 'Unknown Title',
                                 style: const TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 16,

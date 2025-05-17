@@ -1,4 +1,4 @@
-import 'package:farm_fresh_shop_app/domain/entities/book_entity.dart';
+import 'package:farm_fresh_shop_app/data/model/product_json.dart';
 import 'package:flutter/material.dart';
 
 class CartBookContainer extends StatelessWidget {
@@ -11,7 +11,7 @@ class CartBookContainer extends StatelessWidget {
     required this.onTap,
   });
 
-  final BookEntity book;
+  final ProductModel book;
   final VoidCallback onRemoveTap;
   final VoidCallback onIncrease;
   final VoidCallback onDecrease;
@@ -22,7 +22,7 @@ class CartBookContainer extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: Dismissible(
-        key: Key(book.title ?? ''),
+        key: Key(book.name ?? ''),
         direction: DismissDirection.endToStart,
         background: Container(
           margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
@@ -76,20 +76,10 @@ class CartBookContainer extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      book.title ?? 'Unknown Title',
+                      book.name ?? 'Unknown Title',
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 16,
-                      ),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      book.author ?? 'Unknown Author',
-                      style: const TextStyle(
-                        fontSize: 14,
-                        color: Colors.grey,
                       ),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,

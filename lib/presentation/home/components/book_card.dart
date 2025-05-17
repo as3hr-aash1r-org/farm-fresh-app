@@ -1,21 +1,18 @@
-import 'package:farm_fresh_shop_app/domain/entities/book_entity.dart';
+import 'package:farm_fresh_shop_app/data/model/product_json.dart';
+import 'package:farm_fresh_shop_app/navigation/app_navigation.dart';
+import 'package:farm_fresh_shop_app/navigation/route_name.dart';
 import 'package:flutter/material.dart';
-
-import '../../../di/service_locator.dart';
 import '../../../helpers/styles/app_images.dart';
-import '../home_cubit.dart';
 
 class BookCard extends StatelessWidget {
   const BookCard({super.key, required this.book});
-  final BookEntity book;
-
-  static final homeCubit = sl<HomeCubit>();
+  final ProductModel book;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        homeCubit.navigator.navigateToBookDetail(book);
+        AppNavigation.push(RouteName.bookDetails, arguments: {'book': book});
       },
       child: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -38,7 +35,7 @@ class BookCard extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             Text(
-              book.title ?? '',
+              book.name ?? '',
               style: const TextStyle(
                 fontWeight: FontWeight.bold,
               ),
@@ -46,7 +43,7 @@ class BookCard extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
             ),
             Text(
-              book.author ?? "",
+              book.description ?? "",
               style: const TextStyle(
                 color: Colors.grey,
                 fontSize: 12,

@@ -1,21 +1,19 @@
+import 'package:farm_fresh_shop_app/navigation/app_navigation.dart';
+import 'package:farm_fresh_shop_app/navigation/route_name.dart';
 import 'package:farm_fresh_shop_app/presentation/cart/cart_cubit.dart';
 import 'package:farm_fresh_shop_app/presentation/cart/components/checkout/components/checkout_body.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../../../di/service_locator.dart';
 import '../../cart_state.dart';
 
 class CheckoutScreen extends StatelessWidget {
   const CheckoutScreen({super.key});
 
-  static final cartCubit = sl<CartCubit>();
-
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<CartCubit, CartState>(
-      bloc: cartCubit,
       builder: (context, state) {
+        final cartCubit = context.read<CartCubit>();
         final totalPrice = cartCubit.totalPrice;
         return Scaffold(
           appBar: AppBar(
@@ -64,7 +62,8 @@ class CheckoutScreen extends StatelessWidget {
                       ),
                       onPressed: () {
                         cartCubit.clearCart();
-                        cartCubit.cartNavigator.openOrderSuccess(totalPrice);
+                        AppNavigation.push(RouteName.successOrder,
+                            arguments: {"amount": totalPrice});
                       },
                       child: const Text(
                         "Place Order",

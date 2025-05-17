@@ -1,17 +1,14 @@
-import 'package:farm_fresh_shop_app/domain/entities/book_entity.dart';
+import 'package:farm_fresh_shop_app/data/model/product_json.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import 'cart_state.dart';
-import 'cart_navigator.dart';
 
 class CartCubit extends Cubit<CartState> {
-  final CartNavigator cartNavigator;
-  CartCubit(this.cartNavigator) : super(CartState.empty());
+  CartCubit() : super(CartState.empty());
 
-  void addBookToCart(BookEntity book) {
-    final existingIndex = state.books.indexWhere((b) => b.title == book.title);
+  void addBookToCart(ProductModel book) {
+    final existingIndex = state.books.indexWhere((b) => b.name == book.name);
     if (existingIndex != -1) {
-      final updatedBooks = List<BookEntity>.from(state.books);
+      final updatedBooks = List<ProductModel>.from(state.books);
       final updatedBook = updatedBooks[existingIndex].copyWith(
         quantity: updatedBooks[existingIndex].quantity + 1,
       );
@@ -22,33 +19,38 @@ class CartCubit extends Cubit<CartState> {
     }
   }
 
-  void increaseQuantity(BookEntity book) {
-    final updatedBooks = state.books.map((b) {
-      if (b.title == book.title) {
-        return b.copyWith(quantity: b.quantity + 1);
-      }
-      return b;
-    }).toList();
+  void increaseQuantity(ProductModel book) {
+    final updatedBooks = state.books
+        .map((b) {
+          if (b.name == book.name) {
+            return b.copyWith(quantity: b.quantity + 1);
+          }
+          return b;
+        })
+        .cast<ProductModel>()
+        .toList();
     emit(state.copyWith(books: updatedBooks));
   }
 
-  void decreaseQuantity(BookEntity book) {
+  void decreaseQuantity(ProductModel book) {
     if (book.quantity == 1) {
       removeBookFromCart(book);
       return;
     }
-    final updatedBooks = state.books.map((b) {
-      if (b.title == book.title && b.quantity > 1) {
-        return b.copyWith(quantity: b.quantity - 1);
-      }
-      return b;
-    }).toList();
+    final updatedBooks = state.books
+        .map((b) {
+          if (b.name == book.name && b.quantity > 1) {
+            return b.copyWith(quantity: b.quantity - 1);
+          }
+          return b;
+        })
+        .cast<ProductModel>()
+        .toList();
     emit(state.copyWith(books: updatedBooks));
   }
 
-  void removeBookFromCart(BookEntity book) {
-    final updatedBooks =
-        state.books.where((b) => b.title != book.title).toList();
+  void removeBookFromCart(ProductModel book) {
+    final updatedBooks = state.books.where((b) => b.name != book.name).toList();
     emit(state.copyWith(books: updatedBooks));
   }
 

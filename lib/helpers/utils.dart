@@ -13,56 +13,56 @@ List<T> parseList<T>(
 }
 
 Future<void> showToast(String message) async {
-  if (AppNavigation.context.mounted) {
-    await showDialog(
-      context: AppNavigation.context,
-      barrierColor: Colors.transparent,
-      barrierDismissible: false,
-      builder: (context) {
-        Timer.periodic(const Duration(seconds: 2), (timer) {
-          timer.cancel();
-          if (context.mounted) {
-            Navigator.of(context).pop();
-          }
-        });
+  if (!AppNavigation.context.mounted) return;
 
-        return Dialog(
-          shadowColor: Colors.transparent,
-          backgroundColor: Colors.transparent,
-          surfaceTintColor: Colors.transparent,
-          insetAnimationCurve: Curves.easeIn,
-          insetAnimationDuration: const Duration(milliseconds: 500),
-          elevation: 0,
-          child: Align(
-            alignment: Alignment.topCenter,
-            child: Container(
-              padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 5),
-              decoration: BoxDecoration(
-                color: AppColor.primary,
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Flexible(
-                    child: Text(
-                      message,
-                      style: const TextStyle(
-                        fontSize: 15,
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      textAlign: TextAlign.center,
+  final navigator = Navigator.of(AppNavigation.context, rootNavigator: true);
+  Future.delayed(const Duration(seconds: 2), () {
+    if (AppNavigation.context.mounted && navigator.canPop()) {
+      navigator.pop();
+    }
+  });
+
+  await showDialog(
+    context: AppNavigation.context,
+    barrierColor: Colors.transparent,
+    barrierDismissible: false,
+    builder: (context) {
+      return Dialog(
+        shadowColor: Colors.transparent,
+        backgroundColor: Colors.transparent,
+        surfaceTintColor: Colors.transparent,
+        insetAnimationCurve: Curves.easeIn,
+        insetAnimationDuration: const Duration(milliseconds: 500),
+        elevation: 0,
+        child: Align(
+          alignment: Alignment.topCenter,
+          child: Container(
+            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 5),
+            decoration: BoxDecoration(
+              color: AppColor.primary,
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Flexible(
+                  child: Text(
+                    message,
+                    style: const TextStyle(
+                      fontSize: 15,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
                     ),
+                    textAlign: TextAlign.center,
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
-        );
-      },
-    );
-  }
+        ),
+      );
+    },
+  );
 }
 
 Future<bool> showConfirmationDialog(String title) async {

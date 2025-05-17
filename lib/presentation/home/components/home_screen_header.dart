@@ -1,7 +1,7 @@
+import 'package:farm_fresh_shop_app/navigation/app_navigation.dart';
+import 'package:farm_fresh_shop_app/navigation/route_name.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../../di/service_locator.dart';
 import '../../../helpers/styles/app_color.dart';
 import '../../../helpers/styles/app_images.dart';
 import '../../cart/cart_cubit.dart';
@@ -12,33 +12,29 @@ import '../home_state.dart';
 class HomeScreenHeader extends StatelessWidget {
   const HomeScreenHeader({super.key});
 
-  static final homeCubit = sl<HomeCubit>();
-  static final cartCubit = sl<CartCubit>();
-
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<HomeCubit, HomeState>(
-      bloc: homeCubit,
       builder: (context, state) {
+        final homeCubit = context.read<HomeCubit>();
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
               children: [
-                const Text(
-                  'Welcome back, Bunny!',
+                Text(
+                  'Welcome, ${state.user.userName}!',
                   style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.grey,
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
                 const Spacer(),
                 InkWell(
                   onTap: () {
-                    homeCubit.navigator.navigateToCart();
+                    AppNavigation.push(RouteName.cart);
                   },
                   child: BlocBuilder<CartCubit, CartState>(
-                    bloc: cartCubit,
                     builder: (context, state) {
                       return Stack(
                         clipBehavior: Clip.none,
@@ -74,13 +70,6 @@ class HomeScreenHeader extends StatelessWidget {
                 const SizedBox(width: 5),
               ],
             ),
-            const Text(
-              'What do you want to\nread today?',
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
             const SizedBox(height: 24),
             TextField(
               decoration: InputDecoration(
@@ -93,9 +82,9 @@ class HomeScreenHeader extends StatelessWidget {
                 filled: true,
                 fillColor: Colors.grey[100],
               ),
-              onTapOutside: (_) {
-                FocusScope.of(context).unfocus();
-              },
+              // onTapOutside: (_) {
+              //   FocusScope.of(context).unfocus();
+              // },
               onChanged: (query) => homeCubit.searchBooks(query),
             ),
           ],

@@ -7,9 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'components/bottom_bar_icon.dart';
 
 class BottomBarContainer extends StatelessWidget {
-  const BottomBarContainer({super.key, required this.cubit});
-
-  final BottomBarCubit cubit;
+  const BottomBarContainer({super.key});
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -28,19 +26,17 @@ class BottomBarContainer extends StatelessWidget {
         ),
       ),
       child: BlocBuilder<BottomBarCubit, BottomBarState>(
-          bloc: cubit,
           builder: (context, bottomBarState) {
-            return Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: bottomBarState.items.mapIndexed((index, item) {
-                return BottomBarIcon(
-                  item: item,
-                  cubit: cubit,
-                  index: index,
-                );
-              }).toList(),
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: bottomBarState.items.mapIndexed((index, item) {
+            return BottomBarIcon(
+              item: item,
+              index: index,
             );
-          }),
+          }).toList(),
+        );
+      }),
     );
   }
 }

@@ -1,13 +1,12 @@
-import 'package:farm_fresh_shop_app/domain/entities/book_entity.dart';
+import 'package:farm_fresh_shop_app/data/model/product_json.dart';
 
 class BookDetailsState {
-  final BookEntity book;
+  final ProductModel book;
 
   BookDetailsState({required this.book});
 
-  factory BookDetailsState.empty() =>
-      BookDetailsState(book: BookEntity.empty());
+  factory BookDetailsState.empty() => BookDetailsState(book: ProductModel());
 
-  BookDetailsState copyWith({BookEntity? book}) =>
+  BookDetailsState copyWith({ProductModel? book}) =>
       BookDetailsState(book: book ?? this.book);
 }
