@@ -21,16 +21,16 @@ class CartScreen extends StatelessWidget {
             backgroundColor: Colors.white,
             title: const Text("Your Cart"),
           ),
-          body: state.books.isEmpty
+          body: state.products.isEmpty
               ? const Center(child: Text('Your Cart is empty!'))
               : Column(
                   children: [
                     Expanded(
                       child: ListView.builder(
                         padding: const EdgeInsets.only(bottom: 16),
-                        itemCount: state.books.length,
+                        itemCount: state.products.length,
                         itemBuilder: (context, index) {
-                          final book = state.books[index];
+                          final book = state.products[index];
                           return CartBookContainer(
                             book: book,
                             onRemoveTap: () =>

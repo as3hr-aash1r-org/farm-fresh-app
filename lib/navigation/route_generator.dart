@@ -9,7 +9,7 @@ import 'package:farm_fresh_shop_app/presentation/cart/components/checkout/checko
 import 'package:farm_fresh_shop_app/presentation/cart/components/order_success.dart';
 import 'package:farm_fresh_shop_app/presentation/on_boarding/on_boarding_screen.dart';
 import 'package:flutter/material.dart';
-import '../presentation/book_details/book_details_screen.dart';
+import '../presentation/product_details/product_details_screen.dart';
 
 enum TransitionType {
   fade,
@@ -43,7 +43,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
 
     case RouteName.bookDetails:
       return getRoute(
-        BookDetailsScreen(
+        ProductDetailsScreen(
           book: args["book"],
         ),
         TransitionType.slide,

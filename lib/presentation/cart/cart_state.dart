@@ -1,19 +1,19 @@
 import 'package:farm_fresh_shop_app/data/model/product_json.dart';
 
 class CartState {
-  final List<ProductModel> books;
+  final List<ProductModel> products;
 
   CartState({
-    required this.books,
+    required this.products,
   });
 
-  factory CartState.empty() => CartState(books: []);
+  factory CartState.empty() => CartState(products: []);
 
   CartState copyWith({
-    List<ProductModel>? books,
+    List<ProductModel>? products,
   }) {
     return CartState(
-      books: books ?? this.books,
+      products: products ?? this.products,
     );
   }
 }

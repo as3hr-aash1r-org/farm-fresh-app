@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../helpers/widgets/shadow_mask.dart';
 import '../home_cubit.dart';
 import '../home_state.dart';
-import 'book_card.dart';
+import 'product_card.dart';
 
 class HomeScreenBody extends StatelessWidget {
   const HomeScreenBody({super.key});
@@ -34,9 +34,9 @@ class HomeScreenBody extends StatelessWidget {
                     childAspectRatio: 0.7,
                   ),
                   // padding: const EdgeInsets.only(bottom: 80),
-                  itemCount: state.books.length,
+                  itemCount: state.products.length,
                   itemBuilder: (context, index) {
-                    return BookCard(book: state.books[index]);
+                    return BookCard(book: state.products[index]);
                   },
                 ),
               ),

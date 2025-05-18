@@ -22,18 +22,18 @@ class WishlistScreen extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
-                  "Your Wishlist",
+                  "Your Orders",
                   style: TextStyle(color: Colors.black, fontSize: 20),
                 ),
               ),
               Expanded(
-                child: state.books.isEmpty
-                    ? const Center(child: Text('Your wishlist is empty!'))
+                child: state.products.isEmpty
+                    ? const Center(child: Text('Your orders are empty!'))
                     : ListView.builder(
                         padding: const EdgeInsets.only(bottom: 16),
-                        itemCount: state.books.length,
+                        itemCount: state.products.length,
                         itemBuilder: (context, index) {
-                          final book = state.books[index];
+                          final book = state.products[index];
                           return WishlistBookContainer(
                             book: book,
                             onRemoveTap: () =>

@@ -9,8 +9,8 @@ class ProductRepository {
     final response = await networkRepository
         .get(url: "/products", extraQuery: {"search": search});
     if (!response.failed) {
-      final books = parseList(response.data, ProductModel.fromJson);
-      return right(books);
+      final products = parseList(response.data, ProductModel.fromJson);
+      return right(products);
     }
 
     return left(response.message);

@@ -14,9 +14,9 @@ class CheckoutBody extends StatelessWidget {
         return Expanded(
           child: ListView.builder(
             padding: const EdgeInsets.all(16),
-            itemCount: state.books.length,
+            itemCount: state.products.length,
             itemBuilder: (context, index) {
-              final book = state.books[index];
+              final book = state.products[index];
               return Container(
                 margin: const EdgeInsets.only(bottom: 12),
                 padding: const EdgeInsets.all(12),

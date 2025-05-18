@@ -3,21 +3,21 @@ import 'package:farm_fresh_shop_app/data/model/user_model.dart';
 
 class HomeState {
   final bool isLoading;
-  final List<ProductModel> books;
+  final List<ProductModel> products;
   final UserModel user;
 
   HomeState({
     this.isLoading = true,
     required this.user,
-    required this.books,
+    required this.products,
   });
 
-  factory HomeState.empty() => HomeState(books: [], user: UserModel());
+  factory HomeState.empty() => HomeState(products: [], user: UserModel());
 
   HomeState copyWith(
-      {bool? isLoading, List<ProductModel>? books, UserModel? user}) {
+      {bool? isLoading, List<ProductModel>? products, UserModel? user}) {
     return HomeState(
-        books: books ?? this.books,
+        products: products ?? this.products,
         isLoading: isLoading ?? this.isLoading,
         user: user ?? this.user);
   }

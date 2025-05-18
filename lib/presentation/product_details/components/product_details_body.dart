@@ -1,16 +1,16 @@
-import 'package:farm_fresh_shop_app/presentation/book_details/book_details_cubit.dart';
+import 'package:farm_fresh_shop_app/presentation/product_details/product_details_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../book_details_state.dart';
+import '../product_details_state.dart';
 
-class BookDetailsBody extends StatelessWidget {
-  const BookDetailsBody({
+class ProductDetailsBody extends StatelessWidget {
+  const ProductDetailsBody({
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<BookDetailsCubit, BookDetailsState>(
+    return BlocBuilder<ProductDetailsCubit, ProductDetailsState>(
       builder: (context, state) {
         return Padding(
           padding: const EdgeInsets.all(16.0),

@@ -14,7 +14,7 @@ class HomeCubit extends Cubit<HomeState> {
   final debouncer = Debouncer(delay: Duration(milliseconds: 500));
   HomeCubit() : super(HomeState.empty()) {
     initHome();
-    fetchBooks();
+    fetchProducts();
   }
 
   void initHome() async {
@@ -23,20 +23,19 @@ class HomeCubit extends Cubit<HomeState> {
         (r) => emit(state.copyWith(user: UserModel.fromJson(jsonDecode(r)))));
   }
 
-  Future<void> fetchBooks({String? search}) async {
+  Future<void> fetchProducts({String? search}) async {
     emit(state.copyWith(isLoading: true));
-    bookRepository
-        .getProducts(search: search)
-        .then((response) => response.fold((error) => showToast(error), (books) {
-              emit(state.copyWith(isLoading: false, books: books));
+    bookRepository.getProducts(search: search).then(
+        (response) => response.fold((error) => showToast(error), (products) {
+              emit(state.copyWith(isLoading: false, products: products));
             }));
   }
 
-  void searchBooks(String query) {
+  void searchProducts(String query) {
     if (query.isEmpty) {
       return;
     }
 
-    debouncer.call(() => fetchBooks(search: query));
+    debouncer.call(() => fetchProducts(search: query));
   }
 }

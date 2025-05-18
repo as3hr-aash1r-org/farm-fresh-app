@@ -17,6 +17,8 @@ class HomeScreenHeader extends StatelessWidget {
     return BlocBuilder<HomeCubit, HomeState>(
       builder: (context, state) {
         final homeCubit = context.read<HomeCubit>();
+        final cartCubit = context.read<CartCubit>();
+        print("CartCubit: ${cartCubit.state.products.length}");
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -35,6 +37,7 @@ class HomeScreenHeader extends StatelessWidget {
                     AppNavigation.push(RouteName.cart);
                   },
                   child: BlocBuilder<CartCubit, CartState>(
+                    bloc: cartCubit,
                     builder: (context, state) {
                       return Stack(
                         clipBehavior: Clip.none,
@@ -54,7 +57,7 @@ class HomeScreenHeader extends StatelessWidget {
                                 shape: BoxShape.circle,
                               ),
                               child: Text(
-                                state.books.length.toString(),
+                                state.products.length.toString(),
                                 style: const TextStyle(
                                   color: Colors.white,
                                   fontSize: 12,
@@ -85,7 +88,7 @@ class HomeScreenHeader extends StatelessWidget {
               // onTapOutside: (_) {
               //   FocusScope.of(context).unfocus();
               // },
-              onChanged: (query) => homeCubit.searchBooks(query),
+              onChanged: (query) => homeCubit.searchProducts(query),
             ),
           ],
         );

@@ -6,12 +6,12 @@ class WishlistCubit extends Cubit<WishlistState> {
   WishlistCubit() : super(WishlistState.empty());
 
   void addBookToWishlist(ProductModel book) {
-    state.books.insert(0, book);
-    emit(state.copyWith(books: state.books));
+    state.products.insert(0, book);
+    emit(state.copyWith(products: state.products));
   }
 
   void removeBookFromWishlist(ProductModel book) {
-    state.books.remove(book);
-    emit(state.copyWith(books: state.books));
+    state.products.remove(book);
+    emit(state.copyWith(products: state.products));
   }
 }

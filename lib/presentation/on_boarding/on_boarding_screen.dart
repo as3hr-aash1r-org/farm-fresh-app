@@ -16,7 +16,7 @@ class OnboardingScreen extends StatelessWidget {
           children: [
             _buildOnboardingPage(
               illustration: AppImages.onboarding,
-              title: 'Read your favourite books',
+              title: 'Get your favourite Manogoes',
               subtitle:
                   'All your favorites are here, enjoy your read at home or traveling, or anywhere else!',
             ),

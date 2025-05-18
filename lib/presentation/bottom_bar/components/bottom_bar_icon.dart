@@ -27,6 +27,7 @@ class BottomBarIcon extends StatelessWidget {
           child: (index == 1 && isSelected)
               ? Image.asset(
                   AppImages.bookmark2,
+                  color: isSelected ? AppColor.primary : Colors.grey,
                 )
               : Image.asset(
                   item.image,
