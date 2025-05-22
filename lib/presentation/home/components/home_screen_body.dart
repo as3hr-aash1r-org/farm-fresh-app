@@ -15,14 +15,6 @@ class HomeScreenBody extends StatelessWidget {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SizedBox(height: 24),
-            const Text(
-              'New Arrivals',
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
             const SizedBox(height: 16),
             Expanded(
               child: ScrollShaderMask(
@@ -33,10 +25,9 @@ class HomeScreenBody extends StatelessWidget {
                     crossAxisCount: 2,
                     childAspectRatio: 0.7,
                   ),
-                  // padding: const EdgeInsets.only(bottom: 80),
                   itemCount: state.products.length,
                   itemBuilder: (context, index) {
-                    return BookCard(book: state.products[index]);
+                    return ProductCard(book: state.products[index]);
                   },
                 ),
               ),

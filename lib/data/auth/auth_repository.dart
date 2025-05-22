@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
-import 'package:farm_fresh_shop_app/di/initializer.dart';
+import 'package:farm_fresh_shop_app/initializer.dart';
 import '../model/user_model.dart';
 
 class AuthRepository {

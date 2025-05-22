@@ -9,7 +9,6 @@ import 'package:farm_fresh_shop_app/presentation/cart/components/checkout/checko
 import 'package:farm_fresh_shop_app/presentation/cart/components/order_success.dart';
 import 'package:farm_fresh_shop_app/presentation/on_boarding/on_boarding_screen.dart';
 import 'package:flutter/material.dart';
-import '../presentation/product_details/product_details_screen.dart';
 
 enum TransitionType {
   fade,
@@ -40,14 +39,6 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     case RouteName.successOrder:
       return getRoute(
           OrderSuccessScreen(amount: args['amount']), TransitionType.fade);
-
-    case RouteName.bookDetails:
-      return getRoute(
-        ProductDetailsScreen(
-          book: args["book"],
-        ),
-        TransitionType.slide,
-      );
 
     default:
       return MaterialPageRoute(

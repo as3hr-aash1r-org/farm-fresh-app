@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:dio/dio.dart';
-import 'package:farm_fresh_shop_app/di/initializer.dart';
+import 'package:farm_fresh_shop_app/initializer.dart';
 
 class NetworkInterceptor extends Interceptor {
   String _tokenValue = "";

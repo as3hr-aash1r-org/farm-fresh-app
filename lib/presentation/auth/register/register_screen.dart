@@ -6,7 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../helpers/styles/app_color.dart';
+import '../../../helpers/styles/app_images.dart';
 import '../../../helpers/widgets/app_text_field.dart';
+import '../../../helpers/widgets/farm_fresh_asset.dart';
 import 'register_screen_cubit.dart';
 
 class RegisterScreen extends StatelessWidget {
@@ -45,20 +47,23 @@ class RegisterScreen extends StatelessWidget {
                 AppTextField(
                   onChanged: (val) => cubit.onEmailChange(val),
                   hintText: "Email",
-                  prefixIcon: Icons.email,
+                  prefixIcon: FarmFreshAsset(image: AppImages.atTheRate),
                 ),
                 const SizedBox(height: 16),
                 AppTextField(
                   onChanged: (val) => cubit.onUserNameChange(val),
                   hintText: "UserName",
-                  prefixIcon: Icons.person_2_outlined,
+                  prefixIcon: FarmFreshAsset(
+                    image: AppImages.user,
+                    width: 20,
+                  ),
                 ),
                 const SizedBox(height: 16),
                 AppTextField(
                   onChanged: (val) => cubit.onPasswordChange(val),
                   passwordField: true,
                   hintText: "Password",
-                  prefixIcon: Icons.lock_person_rounded,
+                  prefixIcon: FarmFreshAsset(image: AppImages.lock),
                 ),
                 const SizedBox(height: 40),
                 BlocBuilder<RegisterScreenCubit, RegisterScreenState>(

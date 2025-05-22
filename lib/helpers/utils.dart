@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:farm_fresh_shop_app/helpers/styles/app_color.dart';
 import 'package:farm_fresh_shop_app/navigation/app_navigation.dart';
@@ -105,3 +106,12 @@ Future<bool> showConfirmationDialog(String title) async {
       ) ??
       false;
 }
+
+Color get getRandomMangoColor => [
+      AppColor.blue,
+      AppColor.peach,
+      AppColor.green,
+      AppColor.lightYellow,
+      AppColor.orange,
+      AppColor.green,
+    ][Random().nextInt(6)];

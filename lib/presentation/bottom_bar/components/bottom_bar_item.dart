@@ -1,5 +1,3 @@
-import 'package:farm_fresh_shop_app/presentation/wishlist/wishlist_screen.dart';
-
 import '../../home/home_screen.dart';
 import 'package:flutter/material.dart';
 import '../../../helpers/styles/app_images.dart';
@@ -20,7 +18,7 @@ class BottomBarItem {
     ),
     BottomBarItem(
       image: AppImages.bookmark,
-      page: const WishlistScreen(),
+      page: const Placeholder(),
     ),
   ];
 }

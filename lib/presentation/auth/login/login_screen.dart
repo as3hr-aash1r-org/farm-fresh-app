@@ -1,3 +1,5 @@
+import 'package:farm_fresh_shop_app/helpers/styles/app_images.dart';
+import 'package:farm_fresh_shop_app/helpers/widgets/farm_fresh_asset.dart';
 import 'package:farm_fresh_shop_app/presentation/auth/login/login_screen_cubit.dart';
 import 'package:farm_fresh_shop_app/presentation/auth/login/login_screen_state.dart';
 import 'package:flutter/material.dart';
@@ -47,14 +49,14 @@ class LoginScreen extends StatelessWidget {
                   AppTextField(
                     onChanged: (val) => cubit.onEmailChange(val),
                     hintText: "Email",
-                    prefixIcon: Icons.email,
+                    prefixIcon: FarmFreshAsset(image: AppImages.atTheRate),
                   ),
                   const SizedBox(height: 16),
                   AppTextField(
                     onChanged: (val) => cubit.onPasswordChange(val),
                     passwordField: true,
                     hintText: "Password",
-                    prefixIcon: Icons.lock_person_rounded,
+                    prefixIcon: FarmFreshAsset(image: AppImages.lock),
                   ),
                   const SizedBox(height: 40),
                   AppButton(

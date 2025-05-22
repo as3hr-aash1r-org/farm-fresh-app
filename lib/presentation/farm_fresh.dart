@@ -1,4 +1,4 @@
-import 'package:farm_fresh_shop_app/di/initializer.dart';
+import 'package:farm_fresh_shop_app/initializer.dart';
 import 'package:farm_fresh_shop_app/helpers/styles/app_color.dart';
 import 'package:farm_fresh_shop_app/navigation/app_navigation.dart';
 import 'package:farm_fresh_shop_app/navigation/route_generator.dart';

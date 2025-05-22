@@ -1,3 +1,5 @@
+import 'package:farm_fresh_shop_app/helpers/styles/app_images.dart';
+import 'package:farm_fresh_shop_app/helpers/widgets/farm_fresh_asset.dart';
 import 'package:flutter/material.dart';
 
 import '../styles/app_color.dart';
@@ -19,7 +21,7 @@ class AppTextField extends StatefulWidget {
   final void Function(String)? onSubmitted;
   final String hintText;
   final String? prefilledValue;
-  final IconData? prefixIcon;
+  final Widget? prefixIcon;
   final bool enabled;
   final bool passwordField;
   final String? Function(String?)? validator;
@@ -54,14 +56,13 @@ class _InputFieldState extends State<AppTextField> {
           validator: widget.validator,
           decoration: InputDecoration(
             hintText: widget.hintText,
-            prefixIcon: widget.prefixIcon != null
-                ? Icon(widget.prefixIcon, color: Colors.grey.shade600)
-                : null,
+            prefixIconConstraints: const BoxConstraints(maxHeight: 20),
+            prefixIcon: widget.prefixIcon != null ? widget.prefixIcon : null,
             suffixIcon: widget.passwordField
                 ? IconButton(
-                    icon: Icon(
-                      value ? Icons.visibility_off : Icons.visibility,
-                      color: Colors.grey.shade600,
+                    padding: EdgeInsets.zero,
+                    icon: FarmFreshAsset(
+                      image: value ? AppImages.visibleOff : AppImages.visible,
                     ),
                     onPressed: () => hidePassword.value = !hidePassword.value,
                   )

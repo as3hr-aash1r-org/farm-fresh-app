@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:bloc/bloc.dart';
 import 'package:farm_fresh_shop_app/data/model/user_model.dart';
-import 'package:farm_fresh_shop_app/di/initializer.dart';
+import 'package:farm_fresh_shop_app/initializer.dart';
 import 'package:farm_fresh_shop_app/helpers/debouncer.dart';
 import 'package:farm_fresh_shop_app/helpers/utils.dart';
 import 'package:farm_fresh_shop_app/presentation/home/home_state.dart';

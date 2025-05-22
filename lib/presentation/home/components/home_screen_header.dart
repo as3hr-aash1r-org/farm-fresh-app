@@ -18,7 +18,6 @@ class HomeScreenHeader extends StatelessWidget {
       builder: (context, state) {
         final homeCubit = context.read<HomeCubit>();
         final cartCubit = context.read<CartCubit>();
-        print("CartCubit: ${cartCubit.state.products.length}");
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -85,9 +84,9 @@ class HomeScreenHeader extends StatelessWidget {
                 filled: true,
                 fillColor: Colors.grey[100],
               ),
-              // onTapOutside: (_) {
-              //   FocusScope.of(context).unfocus();
-              // },
+              onTapOutside: (_) {
+                FocusScope.of(context).unfocus();
+              },
               onChanged: (query) => homeCubit.searchProducts(query),
             ),
           ],

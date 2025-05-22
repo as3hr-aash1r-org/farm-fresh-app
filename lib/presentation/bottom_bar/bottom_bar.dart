@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../helpers/utils.dart';
 import '../home/home_cubit.dart';
-import '../wishlist/wishlist_cubit.dart';
 import 'bottom_bar_container.dart';
 import 'bottom_bar_cubit.dart';
 import 'bottom_bar_state.dart';
@@ -18,7 +17,6 @@ class BottomBar extends StatelessWidget {
       providers: [
         BlocProvider(create: (context) => BottomBarCubit()),
         BlocProvider(create: (context) => HomeCubit()),
-        BlocProvider(create: (context) => WishlistCubit()),
         BlocProvider(create: (context) => CartCubit()),
       ],
       child: BlocBuilder<BottomBarCubit, BottomBarState>(

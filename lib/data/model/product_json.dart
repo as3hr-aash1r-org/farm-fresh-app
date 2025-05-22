@@ -7,11 +7,13 @@ class ProductModel {
   final String? image;
   final String? description;
   final double? price;
+  final int? inStock;
   final int quantity;
 
   ProductModel({
     this.id,
     this.name,
+    this.inStock,
     this.quantity = 1,
     this.image,
     this.description,
@@ -21,13 +23,15 @@ class ProductModel {
   factory ProductModel.fromJson(Map<String, dynamic> json) => ProductModel(
         id: json["id"],
         name: json["name"],
+        inStock: json["stock"],
         image: [
-          AppImages.book1,
-          AppImages.book2,
-          AppImages.book3,
-          AppImages.book4,
-          AppImages.book5,
-        ][Random().nextInt(5)],
+          AppImages.mango1,
+          AppImages.mango2,
+          AppImages.mango3,
+          AppImages.mango4,
+          AppImages.mango5,
+          AppImages.mango6,
+        ][Random().nextInt(6)],
         description: json["description"],
         price: json["price"]?.toDouble(),
       );
