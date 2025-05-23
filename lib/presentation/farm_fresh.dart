@@ -25,6 +25,7 @@ class FarmFreshApp extends StatelessWidget {
                 return MaterialApp(
                   debugShowCheckedModeBanner: false,
                   theme: ThemeData(
+                      fontFamily: "Farm Fresh Font",
                       scaffoldBackgroundColor: Colors.white,
                       textSelectionTheme: TextSelectionThemeData(
                         cursorColor: AppColor.primary,

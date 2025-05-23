@@ -43,3 +43,8 @@ flutter:
   uses-material-design: true
   assets:
     - assets/images/
+
+  fonts:
+    - family: Farm Fresh Font
+      fonts:
+        - asset: assets/fonts/farm_fresh_font.ttf

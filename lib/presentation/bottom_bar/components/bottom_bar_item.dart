@@ -1,3 +1,4 @@
+import 'package:farm_fresh_shop_app/presentation/order/order_screen.dart';
 import '../../home/home_screen.dart';
 import 'package:flutter/material.dart';
 import '../../../helpers/styles/app_images.dart';
@@ -17,8 +18,8 @@ class BottomBarItem {
       page: const HomeScreen(),
     ),
     BottomBarItem(
-      image: AppImages.bookmark,
-      page: const Placeholder(),
+      image: AppImages.orders,
+      page: const OrderScreen(),
     ),
   ];
 }

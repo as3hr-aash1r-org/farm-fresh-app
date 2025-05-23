@@ -5,6 +5,7 @@ enum DeliveryType { none, pickup, doorstep }
 
 class HomeState {
   final bool isLoading;
+  final bool isSearching;
   final List<ProductModel> products;
   final UserModel user;
   final DeliveryType selectedDeliveryType;
@@ -19,6 +20,7 @@ class HomeState {
   HomeState({
     this.airports = const [],
     this.selectedAirport,
+    this.isSearching = false,
     this.isLoading = true,
     required this.user,
     this.isVerifyingZip = false,
@@ -34,6 +36,7 @@ class HomeState {
 
   HomeState copyWith({
     bool? isLoading,
+    bool? isSearching,
     List<ProductModel>? products,
     UserModel? user,
     DeliveryType? selectedDeliveryType,
@@ -46,6 +49,7 @@ class HomeState {
     String? selectedAirport,
   }) {
     return HomeState(
+      isSearching: isSearching ?? this.isSearching,
       isLoading: isLoading ?? this.isLoading,
       products: products ?? this.products,
       user: user ?? this.user,

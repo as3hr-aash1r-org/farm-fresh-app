@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:farm_fresh_shop_app/data/model/user_model.dart';
@@ -29,9 +30,14 @@ class HomeCubit extends Cubit<HomeState> {
 
   Future<void> fetchData({String? search}) async {
     emit(state.copyWith(isLoading: true));
-    appData.getProducts(search: search).then(
-        (response) => response.fold((error) => showToast(error), (products) {
-              emit(state.copyWith(isLoading: false, products: products));
+    appData
+        .getProducts(search: search)
+        .then((response) => response.fold((error) {
+              emit(state.copyWith(isLoading: false, isSearching: false));
+              log("ERROR FETCHING PRODS");
+            }, (products) {
+              emit(state.copyWith(
+                  isLoading: false, products: products, isSearching: false));
             }));
   }
 
@@ -60,6 +66,7 @@ class HomeCubit extends Cubit<HomeState> {
   }
 
   void searchProducts(String query) {
+    emit(state.copyWith(isSearching: true));
     debouncer.call(() => fetchData(search: query));
   }
 

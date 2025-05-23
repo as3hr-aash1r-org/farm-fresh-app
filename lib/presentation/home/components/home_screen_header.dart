@@ -82,7 +82,7 @@ class HomeScreenHeader extends StatelessWidget {
               children: [
                 Expanded(
                   child: Padding(
-                    padding: const EdgeInsets.only(bottom: 16),
+                    padding: const EdgeInsets.only(bottom: 8),
                     child: InkWell(
                       onTap: () async {
                         final cartCubit = sl<CartCubit>();
@@ -115,6 +115,7 @@ class HomeScreenHeader extends StatelessWidget {
                       child: InputDecorator(
                         decoration: InputDecoration(
                           filled: true,
+                          contentPadding: EdgeInsets.all(2),
                           fillColor: Colors.grey[100],
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(12),
@@ -128,6 +129,7 @@ class HomeScreenHeader extends StatelessWidget {
                         ),
                         child: Row(
                           children: [
+                            SizedBox(width: 5),
                             Text(
                               state.selectedDeliveryType == DeliveryType.none
                                   ? "Select delivery type"

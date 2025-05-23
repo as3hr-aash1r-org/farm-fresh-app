@@ -15,6 +15,10 @@ class HomeScreenBody extends StatelessWidget {
     return BlocBuilder<HomeCubit, HomeState>(
       bloc: sl<HomeCubit>(),
       builder: (context, state) {
+        final isLoading = state.isLoading && !state.isSearching;
+        final products = state.products;
+        final isEmpty = !isLoading && products.isEmpty;
+
         return RefreshIndicator(
           color: Colors.white,
           backgroundColor: getRandomMangoColor,
@@ -23,24 +27,29 @@ class HomeScreenBody extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(height: 16),
-              Expanded(
-                child: ScrollShaderMask(
-                  child: GridView.builder(
-                    shrinkWrap: true,
-                    padding: const EdgeInsets.only(bottom: 60),
-                    physics: const NeverScrollableScrollPhysics(),
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      childAspectRatio: 0.7,
+              if (isLoading)
+                Center(child: CircularProgressIndicator())
+              else if (isEmpty)
+                Center(child: Text("No Products Found!"))
+              else
+                Expanded(
+                  child: ScrollShaderMask(
+                    child: GridView.builder(
+                      shrinkWrap: true,
+                      padding: const EdgeInsets.only(bottom: 60),
+                      physics: const NeverScrollableScrollPhysics(),
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        childAspectRatio: 0.7,
+                      ),
+                      itemCount: state.products.length,
+                      itemBuilder: (context, index) {
+                        return ProductCard(product: state.products[index]);
+                      },
                     ),
-                    itemCount: state.products.length,
-                    itemBuilder: (context, index) {
-                      return ProductCard(product: state.products[index]);
-                    },
                   ),
                 ),
-              ),
             ],
           ),
         );

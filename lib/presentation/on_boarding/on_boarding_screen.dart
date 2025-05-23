@@ -316,7 +316,7 @@ class _OnboardingScreenState extends State<OnboardingScreen>
             ),
           ),
           child: const Text(
-            "FRESH SHOP",
+            "FARM FRESH",
             style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.w600,

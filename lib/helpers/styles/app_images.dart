@@ -2,7 +2,7 @@ class AppImages {
   static const baseDir = "assets/images";
   static const home = "$baseDir/home.png";
   static const bookmark = "$baseDir/bookmark.png";
-  static const bookmark2 = "$baseDir/bookmark2.png";
+  static const orders = "$baseDir/orders.png";
   static const cart = "$baseDir/cart.png";
   static const mango1 = "$baseDir/mango1.png";
   static const mango2 = "$baseDir/mango2.png";

@@ -5,7 +5,6 @@ import 'package:farm_fresh_shop_app/presentation/auth/login/login_screen.dart';
 import 'package:farm_fresh_shop_app/presentation/auth/register/register_screen.dart';
 import 'package:farm_fresh_shop_app/presentation/bottom_bar/bottom_bar.dart';
 import 'package:farm_fresh_shop_app/presentation/cart/cart_screen.dart';
-import 'package:farm_fresh_shop_app/presentation/cart/components/checkout/checkout_screen.dart';
 import 'package:farm_fresh_shop_app/presentation/cart/components/order_success.dart';
 import 'package:farm_fresh_shop_app/presentation/on_boarding/on_boarding_screen.dart';
 import 'package:flutter/material.dart';
@@ -32,9 +31,6 @@ Route<dynamic> generateRoute(RouteSettings settings) {
 
     case RouteName.cart:
       return getRoute(CartScreen(), TransitionType.fade);
-
-    case RouteName.checkout:
-      return getRoute(const CheckoutScreen(), TransitionType.fade);
 
     case RouteName.successOrder:
       return getRoute(

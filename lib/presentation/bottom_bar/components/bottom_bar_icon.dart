@@ -1,5 +1,4 @@
 import 'package:farm_fresh_shop_app/helpers/styles/app_color.dart';
-import 'package:farm_fresh_shop_app/helpers/styles/app_images.dart';
 import 'bottom_bar_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -24,15 +23,11 @@ class BottomBarIcon extends StatelessWidget {
       bool isSelected = state.currentIndex == index;
       return InkWell(
           onTap: () => cubit.updateIndex(index),
-          child: (index == 1 && isSelected)
-              ? Image.asset(
-                  AppImages.bookmark2,
-                  color: isSelected ? AppColor.primary : Colors.grey,
-                )
-              : Image.asset(
-                  item.image,
-                  color: isSelected ? AppColor.primary : Colors.grey,
-                ));
+          child: Image.asset(
+            item.image,
+            height: 20,
+            color: isSelected ? AppColor.primary : Colors.grey,
+          ));
     });
   }
 }

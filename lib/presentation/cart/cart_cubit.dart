@@ -63,10 +63,10 @@ class CartCubit extends Cubit<CartState> {
   double get totalPrice =>
       state.products.fold(0.0, (sum, product) => sum + (product.price ?? 0.0));
 
-  void placeOrder() {
+  void placeOrder(PaymentModel payment) {
     final homeState = sl<HomeCubit>().state;
     final order = OrderModel(
-      paymentId: "32131",
+      amount: totalPrice,
       deliveryType: homeState.selectedDeliveryType.name.toLowerCase(),
       shippingState: homeState.selectedState,
       shippingZipCode: homeState.zipCode,
@@ -78,6 +78,7 @@ class CartCubit extends Cubit<CartState> {
                 totalPrice: product.price!,
               ))
           .toList(),
+      payment: payment,
     );
     emit(state.copyWith(isLoading: true));
     appData.createOrder(order: order).then((response) => response.fold((l) {

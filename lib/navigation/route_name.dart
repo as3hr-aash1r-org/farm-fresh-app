@@ -4,6 +4,5 @@ class RouteName {
   static const register = "/register";
   static const bottomBar = '/bottomBar';
   static const cart = '/cart';
-  static const checkout = '/checkout';
   static const successOrder = '/succes-order';
 }

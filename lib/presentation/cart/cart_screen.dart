@@ -5,6 +5,7 @@ import '../../initializer.dart';
 import 'components/cart_product_container.dart';
 import 'cart_cubit.dart';
 import 'cart_state.dart';
+import 'components/payment/payment_sheet.dart' show PaymentBottomSheet;
 
 class CartScreen extends StatelessWidget {
   const CartScreen({super.key});
@@ -83,7 +84,18 @@ class CartScreen extends StatelessWidget {
                               ),
                             ),
                             onPressed: () {
-                              cartCubit.placeOrder();
+                              showModalBottomSheet(
+                                context: context,
+                                isScrollControlled: true,
+                                backgroundColor: Colors.transparent,
+                                builder: (context) => PaymentBottomSheet(
+                                  totalAmount: cartCubit.totalPrice,
+                                  onPaymentSuccess: (payment) {
+                                    print('Payment completed successfully!');
+                                    cartCubit.placeOrder(payment);
+                                  },
+                                ),
+                              );
                             },
                             child: state.isLoading
                                 ? const CircularProgressIndicator(

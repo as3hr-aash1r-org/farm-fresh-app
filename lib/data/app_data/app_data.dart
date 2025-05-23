@@ -87,4 +87,13 @@ class FarmFreshAppData {
     );
     return response.failed ? left(response.message) : right(true);
   }
+
+  Future<Either<String, List<OrderModel>>> getOrders() async {
+    final response = await networkRepository.get(
+      url: "/orders/my-orders",
+    );
+    if (response.failed) return left(response.message);
+    final orders = parseList(response.data, OrderModel.fromJson);
+    return right(orders);
+  }
 }

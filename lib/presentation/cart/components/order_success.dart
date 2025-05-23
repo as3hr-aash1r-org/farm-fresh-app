@@ -3,6 +3,7 @@ import 'package:farm_fresh_shop_app/initializer.dart';
 import 'package:farm_fresh_shop_app/navigation/app_navigation.dart';
 import 'package:farm_fresh_shop_app/presentation/cart/cart_cubit.dart';
 import 'package:farm_fresh_shop_app/presentation/home/home_cubit.dart';
+import 'package:farm_fresh_shop_app/presentation/order/order_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import '../../../helpers/styles/app_color.dart';
@@ -22,6 +23,7 @@ class _OrderSuccessScreenState extends State<OrderSuccessScreen> {
     super.initState();
     sl<CartCubit>().clearCart();
     sl<HomeCubit>().fetchData();
+    sl<OrderCubit>().fetchOrders();
   }
 
   @override
@@ -137,9 +139,7 @@ class _OrderSuccessScreenState extends State<OrderSuccessScreen> {
                 children: [
                   Expanded(
                     child: OutlinedButton(
-                      onPressed: () {
-                        // Navigate to order tracking
-                      },
+                      onPressed: () {},
                       style: OutlinedButton.styleFrom(
                         padding: const EdgeInsets.symmetric(vertical: 16),
                         side: const BorderSide(color: AppColor.primary),
