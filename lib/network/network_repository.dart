@@ -16,6 +16,7 @@ class NetworkRepository {
     final completer = Completer<NetworkResponse>();
     late NetworkResponse networkResponse;
     try {
+      print("HERE");
       final response = await dioClient.dio.request(
         url,
         data: data,
@@ -23,9 +24,11 @@ class NetworkRepository {
         options: Options(method: method),
       );
 
+      print("HERE 1: ${response.data}");
       networkResponse = _handleResponse(response);
       completer.complete(networkResponse);
     } on DioException catch (e) {
+      print("IN DIO CATCH: ${e.toString()}");
       if (!completer.isCompleted) {
         networkResponse = DioClient.handleDioError(e);
         networkResponse.failed = true;
@@ -33,6 +36,7 @@ class NetworkRepository {
         return networkResponse;
       }
     } on NetworkResponse catch (e) {
+      print("IN NETWORK RESPONSE CATCH: ${e.toString()}");
       if (!completer.isCompleted) {
         networkResponse = e;
         networkResponse.failed = true;
@@ -40,6 +44,7 @@ class NetworkRepository {
         return networkResponse;
       }
     } catch (e) {
+      print("IN CATCH: ${e.toString()}");
       if (!completer.isCompleted) {
         networkResponse = NetworkResponse(
           message: "An unexpected error occurred",
@@ -101,6 +106,7 @@ class NetworkRepository {
       );
 
   NetworkResponse _handleResponse(Response response) {
+    print("Handle Response: ${response.data}");
     String message = "";
     if (response.statusCode == 200 || response.statusCode == 201) {
       return NetworkResponse(

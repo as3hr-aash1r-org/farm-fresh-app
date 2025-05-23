@@ -1,13 +1,28 @@
 import 'package:farm_fresh_shop_app/helpers/styles/app_images.dart';
+import 'package:farm_fresh_shop_app/initializer.dart';
 import 'package:farm_fresh_shop_app/navigation/app_navigation.dart';
+import 'package:farm_fresh_shop_app/presentation/cart/cart_cubit.dart';
+import 'package:farm_fresh_shop_app/presentation/home/home_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import '../../../helpers/styles/app_color.dart';
 
-class OrderSuccessScreen extends StatelessWidget {
+class OrderSuccessScreen extends StatefulWidget {
   final double amount;
 
   const OrderSuccessScreen({super.key, required this.amount});
+
+  @override
+  State<OrderSuccessScreen> createState() => _OrderSuccessScreenState();
+}
+
+class _OrderSuccessScreenState extends State<OrderSuccessScreen> {
+  @override
+  void initState() {
+    super.initState();
+    sl<CartCubit>().clearCart();
+    sl<HomeCubit>().fetchData();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -78,7 +93,7 @@ class OrderSuccessScreen extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          "\$${amount.toStringAsFixed(2)}",
+                          "\$${widget.amount.toStringAsFixed(2)}",
                           style: const TextStyle(
                             fontSize: 24,
                             fontWeight: FontWeight.bold,

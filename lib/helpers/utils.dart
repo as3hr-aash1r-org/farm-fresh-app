@@ -13,7 +13,7 @@ List<T> parseList<T>(
   return parsedData?.map(fromJson).toList().cast<T>() ?? [];
 }
 
-Future<void> showToast(String message) async {
+Future<void> showToast(String message, {Color? color}) async {
   if (!AppNavigation.context.mounted) return;
 
   final navigator = Navigator.of(AppNavigation.context, rootNavigator: true);
@@ -40,7 +40,7 @@ Future<void> showToast(String message) async {
           child: Container(
             padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 5),
             decoration: BoxDecoration(
-              color: AppColor.primary,
+              color: color ?? AppColor.primary,
               borderRadius: BorderRadius.circular(12),
             ),
             child: Row(

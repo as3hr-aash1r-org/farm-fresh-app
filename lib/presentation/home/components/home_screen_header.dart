@@ -1,3 +1,4 @@
+import 'package:farm_fresh_shop_app/helpers/utils.dart';
 import 'package:farm_fresh_shop_app/navigation/app_navigation.dart';
 import 'package:farm_fresh_shop_app/navigation/route_name.dart';
 import 'package:flutter/material.dart';
@@ -82,35 +83,65 @@ class HomeScreenHeader extends StatelessWidget {
                 Expanded(
                   child: Padding(
                     padding: const EdgeInsets.only(bottom: 16),
-                    child: DropdownButtonFormField<DeliveryType>(
-                      value: state.selectedDeliveryType == DeliveryType.none
-                          ? null
-                          : state.selectedDeliveryType,
-                      hint: const Text("Select delivery type"),
-                      decoration: InputDecoration(
-                        filled: true,
-                        fillColor: Colors.grey[100],
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12),
-                          borderSide: BorderSide.none,
+                    child: InkWell(
+                      onTap: () async {
+                        final cartCubit = sl<CartCubit>();
+                        final homeCubit = sl<HomeCubit>();
+                        final currentDeliveryType =
+                            homeCubit.state.selectedDeliveryType;
+
+                        final hasCartItems =
+                            cartCubit.state.products.isNotEmpty;
+
+                        bool shouldProceed = true;
+
+                        if (currentDeliveryType != DeliveryType.none &&
+                            hasCartItems) {
+                          shouldProceed = await showConfirmationDialog(
+                            "Changing the delivery type will clear your cart. Do you want to continue?",
+                          );
+                          if (shouldProceed) {
+                            cartCubit.clearCart();
+                          }
+                        }
+
+                        if (shouldProceed) {
+                          showDialog(
+                            context: context,
+                            builder: (_) => const DeliveryTypeDialog(),
+                          );
+                        }
+                      },
+                      child: InputDecorator(
+                        decoration: InputDecoration(
+                          filled: true,
+                          fillColor: Colors.grey[100],
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                            borderSide: BorderSide.none,
+                          ),
+                        ),
+                        child: Row(
+                          children: [
+                            Text(
+                              state.selectedDeliveryType == DeliveryType.none
+                                  ? "Select delivery type"
+                                  : (state.selectedDeliveryType ==
+                                          DeliveryType.pickup
+                                      ? "Pickup"
+                                      : "Doorstep"),
+                              style: TextStyle(
+                                color: state.selectedDeliveryType ==
+                                        DeliveryType.none
+                                    ? Colors.grey
+                                    : Colors.black,
+                              ),
+                            ),
+                            const Spacer(),
+                            const Icon(Icons.arrow_drop_down),
+                          ],
                         ),
                       ),
-                      items: const [
-                        DropdownMenuItem(
-                          value: DeliveryType.pickup,
-                          child: Text("Pickup"),
-                        ),
-                        DropdownMenuItem(
-                          value: DeliveryType.doorstep,
-                          child: Text("Doorstep"),
-                        ),
-                      ],
-                      onChanged: (value) {
-                        showDialog(
-                          context: context,
-                          builder: (_) => const DeliveryTypeDialog(),
-                        );
-                      },
                     ),
                   ),
                 ),

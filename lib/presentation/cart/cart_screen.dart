@@ -1,10 +1,8 @@
 import 'package:farm_fresh_shop_app/helpers/styles/app_color.dart';
-import 'package:farm_fresh_shop_app/navigation/app_navigation.dart';
-import 'package:farm_fresh_shop_app/navigation/route_name.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../initializer.dart';
-import 'components/cart_book_container.dart';
+import 'components/cart_product_container.dart';
 import 'cart_cubit.dart';
 import 'cart_state.dart';
 
@@ -33,13 +31,15 @@ class CartScreen extends StatelessWidget {
                         padding: const EdgeInsets.only(bottom: 16),
                         itemCount: state.products.length,
                         itemBuilder: (context, index) {
-                          final book = state.products[index];
-                          return CartBookContainer(
-                            book: book,
+                          final product = state.products[index];
+                          return CartProductContainer(
+                            product: product,
                             onRemoveTap: () =>
-                                cartCubit.removeBookFromCart(book),
-                            onIncrease: () => cartCubit.increaseQuantity(book),
-                            onDecrease: () => cartCubit.decreaseQuantity(book),
+                                cartCubit.removeProductFromCart(product),
+                            onIncrease: () =>
+                                cartCubit.increaseQuantity(product),
+                            onDecrease: () =>
+                                cartCubit.decreaseQuantity(product),
                             onTap: () {},
                           );
                         },
@@ -83,13 +83,16 @@ class CartScreen extends StatelessWidget {
                               ),
                             ),
                             onPressed: () {
-                              AppNavigation.push(RouteName.checkout);
+                              cartCubit.placeOrder();
                             },
-                            child: const Text(
-                              "Proceed to Checkout",
-                              style:
-                                  TextStyle(fontSize: 16, color: Colors.white),
-                            ),
+                            child: state.isLoading
+                                ? const CircularProgressIndicator(
+                                    color: Colors.white)
+                                : const Text(
+                                    "Place Order",
+                                    style: TextStyle(
+                                        fontSize: 16, color: Colors.white),
+                                  ),
                           ),
                         ],
                       ),

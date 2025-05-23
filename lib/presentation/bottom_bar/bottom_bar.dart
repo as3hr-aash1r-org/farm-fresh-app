@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../helpers/utils.dart';
 import 'bottom_bar_container.dart';
@@ -32,9 +33,27 @@ class BottomBar extends StatelessWidget {
             }
           },
           child: Scaffold(
+              appBar: AppBar(
+                toolbarHeight: 0,
+                systemOverlayStyle:
+                    SystemUiOverlayStyle(statusBarColor: Colors.white),
+              ),
               resizeToAvoidBottomInset: false,
-              bottomNavigationBar: BottomBarContainer(),
-              body: SafeArea(child: state.page)),
+              body: SafeArea(
+                  child: Stack(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 60),
+                    child: state.page,
+                  ),
+                  if (MediaQuery.of(context).viewInsets.bottom == 0)
+                    Positioned(
+                        bottom: 0,
+                        left: 0,
+                        right: 0,
+                        child: BottomBarContainer()),
+                ],
+              ))),
         );
       }),
     );

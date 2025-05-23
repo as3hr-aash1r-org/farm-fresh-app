@@ -34,6 +34,7 @@ class FarmFreshAsset extends StatelessWidget {
             fit: BoxFit.cover,
             width: width,
             height: height,
+            color: color,
           );
   }
 }

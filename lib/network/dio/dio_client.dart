@@ -1,8 +1,11 @@
 import 'package:dio/dio.dart';
+import 'package:farm_fresh_shop_app/navigation/app_navigation.dart';
+import 'package:farm_fresh_shop_app/navigation/route_name.dart';
 import 'package:flutter/foundation.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart' show PrettyDioLogger;
 import '../../helpers/constants.dart';
 import '../network_response.dart';
+import 'interceptors/dio_retry_interceptor.dart';
 import 'interceptors/network_interceptor.dart';
 
 class DioClient {
@@ -28,6 +31,26 @@ class DioClient {
   void _initializeDioClient() {
     dio.interceptors.addAll([
       NetworkInterceptor(),
+      RetryInterceptor(
+        dio: dio,
+        options: RetryOptions(
+          retries: maxRetries,
+          retryInterval: const Duration(seconds: retryDelay),
+          retryEvaluator: (error) async {
+            if (error.response?.statusCode == 401) {
+              AppNavigation.pushReplacement(RouteName.login);
+              return false;
+            }
+            // if (error.type == DioExceptionType.connectionError ||
+            //     error.type == DioExceptionType.connectionTimeout ||
+            //     (error.response?.statusCode != null &&
+            //         error.response!.statusCode! >= 500)) {
+            //   return true;
+            // }
+            return false;
+          },
+        ),
+      ),
       PrettyDioLogger(
         requestHeader: true,
         requestBody: true,
@@ -44,8 +67,10 @@ class DioClient {
   static NetworkResponse handleDioError(DioException error) {
     String message = "";
     dynamic data;
+    print("Error: ${error.response}");
     if (error.response?.data != null) {
       final responseData = error.response!.data;
+
       message = responseData["detail"] ?? "Unknown error occurred";
       data = responseData;
     } else {

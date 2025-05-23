@@ -1,3 +1,4 @@
+import 'package:farm_fresh_shop_app/helpers/styles/app_color.dart';
 import 'package:flutter/material.dart';
 
 class AppButton extends StatelessWidget {
@@ -25,8 +26,8 @@ class AppButton extends StatelessWidget {
         borderRadius: borderRadius ?? BorderRadius.circular(12),
         gradient: LinearGradient(
           colors: [
-            const Color(0xFFFF8B83),
-            const Color(0xFFFF621F),
+            AppColor.primary.withValues(alpha: 0.4),
+            AppColor.green,
           ],
         ),
       ),

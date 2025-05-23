@@ -1,0 +1,2 @@
+/media/asher/Extra/GRINDING/freelance/projects/mango_app/farm-fresh-app/android/app/.cxx/RelWithDebInfo/3z3p5a6m/arm64-v8a/CMakeFiles/edit_cache.dir
+/media/asher/Extra/GRINDING/freelance/projects/mango_app/farm-fresh-app/android/app/.cxx/RelWithDebInfo/3z3p5a6m/arm64-v8a/CMakeFiles/rebuild_cache.dir

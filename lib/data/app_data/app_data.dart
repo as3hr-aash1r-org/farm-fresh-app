@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:farm_fresh_shop_app/data/model/order_model.dart';
 import 'package:farm_fresh_shop_app/data/model/product_json.dart';
 import 'package:farm_fresh_shop_app/helpers/utils.dart';
 import '../../initializer.dart';
@@ -75,5 +76,15 @@ class FarmFreshAppData {
     }
 
     return left(response.message);
+  }
+
+  Future<Either<String, bool>> createOrder({
+    required OrderModel order,
+  }) async {
+    final response = await networkRepository.post(
+      url: "/orders/",
+      data: order.toJson(),
+    );
+    return response.failed ? left(response.message) : right(true);
   }
 }

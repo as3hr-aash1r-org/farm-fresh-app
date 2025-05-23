@@ -14,14 +14,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(Duration(milliseconds: 1000), () {
-      localStorageRepository.getValue("token").then(
-            (response) => response.fold(
-              (error) => AppNavigation.pushReplacement(RouteName.login),
-              (token) => AppNavigation.pushReplacement(RouteName.bottomBar),
-            ),
-          );
-    });
+    localStorageRepository.getValue("token").then(
+          (response) => response.fold(
+            (error) => AppNavigation.pushReplacement(RouteName.login),
+            (token) => AppNavigation.pushReplacement(RouteName.bottomBar),
+          ),
+        );
   }
 
   @override

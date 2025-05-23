@@ -27,11 +27,15 @@ class ProductModel {
         image: [
           AppImages.mango1,
           AppImages.mango2,
-          AppImages.mango3,
+          AppImages.mango7,
           AppImages.mango4,
           AppImages.mango5,
           AppImages.mango6,
-        ][Random().nextInt(6)],
+          AppImages.mango7,
+          AppImages.mango8,
+          AppImages.mango9,
+          AppImages.mango10
+        ][Random().nextInt(10)],
         description: json["description"],
         price: json["price"]?.toDouble(),
       );
@@ -51,4 +55,13 @@ class ProductModel {
         description: overview ?? description,
         price: price ?? this.price,
       );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "name": name,
+        "description": description,
+        "price": price,
+        "inStock": inStock,
+        "quantity": quantity,
+      };
 }

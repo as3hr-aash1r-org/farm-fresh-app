@@ -10,6 +10,11 @@ class AppImages {
   static const mango4 = "$baseDir/mango4.png";
   static const mango5 = "$baseDir/mango5.png";
   static const mango6 = "$baseDir/mango6.png";
+  static const mango7 = "$baseDir/mango7.png";
+  static const mango8 = "$baseDir/mango8.png";
+  static const mango9 = "$baseDir/mango9.png";
+  static const mango10 = "$baseDir/mango10.png";
+
   static const orderBasket = "$baseDir/order_basket.svg";
   static const success = "$baseDir/success.json";
   static const atTheRate = "$baseDir/atTheRate.svg";

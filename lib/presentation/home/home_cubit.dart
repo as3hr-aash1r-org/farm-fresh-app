@@ -60,10 +60,6 @@ class HomeCubit extends Cubit<HomeState> {
   }
 
   void searchProducts(String query) {
-    if (query.isEmpty) {
-      return;
-    }
-
     debouncer.call(() => fetchData(search: query));
   }
 
@@ -110,9 +106,7 @@ class HomeCubit extends Cubit<HomeState> {
           setDeliveryType(DeliveryType.doorstep);
           Navigator.pop(context);
         } else {
-          showToast(
-            message,
-          );
+          showToast(message, color: Colors.red);
         }
       },
     );
