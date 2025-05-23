@@ -4,16 +4,18 @@ import 'package:farm_fresh_shop_app/presentation/cart/cart_cubit.dart';
 import 'package:farm_fresh_shop_app/presentation/cart/components/checkout/components/checkout_body.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../../initializer.dart';
 import '../../cart_state.dart';
 
 class CheckoutScreen extends StatelessWidget {
   const CheckoutScreen({super.key});
 
+  static final cartCubit = sl<CartCubit>();
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<CartCubit, CartState>(
+      bloc: cartCubit,
       builder: (context, state) {
-        final cartCubit = context.read<CartCubit>();
         final totalPrice = cartCubit.totalPrice;
         return Scaffold(
           appBar: AppBar(

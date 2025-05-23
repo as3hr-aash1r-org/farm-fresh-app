@@ -1,9 +1,6 @@
-import 'package:farm_fresh_shop_app/presentation/cart/cart_cubit.dart'
-    show CartCubit;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../helpers/utils.dart';
-import '../home/home_cubit.dart';
 import 'bottom_bar_container.dart';
 import 'bottom_bar_cubit.dart';
 import 'bottom_bar_state.dart';
@@ -16,8 +13,6 @@ class BottomBar extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (context) => BottomBarCubit()),
-        BlocProvider(create: (context) => HomeCubit()),
-        BlocProvider(create: (context) => CartCubit()),
       ],
       child: BlocBuilder<BottomBarCubit, BottomBarState>(
           builder: (context, state) {

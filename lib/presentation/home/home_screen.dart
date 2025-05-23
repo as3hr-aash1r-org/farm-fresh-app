@@ -1,3 +1,4 @@
+import 'package:farm_fresh_shop_app/initializer.dart';
 import 'package:farm_fresh_shop_app/presentation/home/components/home_screen_body.dart';
 import 'package:farm_fresh_shop_app/presentation/home/components/home_screen_header.dart';
 import 'package:farm_fresh_shop_app/presentation/home/home_state.dart';
@@ -10,16 +11,18 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<HomeCubit, HomeState>(builder: (context, state) {
-      return Padding(
-        padding: EdgeInsets.fromLTRB(5, 16, 5, 0),
-        child: Column(
-          children: [
-            HomeScreenHeader(),
-            Expanded(child: HomeScreenBody()),
-          ],
-        ),
-      );
-    });
+    return BlocBuilder<HomeCubit, HomeState>(
+        bloc: sl<HomeCubit>(),
+        builder: (context, state) {
+          return Padding(
+            padding: EdgeInsets.fromLTRB(5, 16, 5, 0),
+            child: Column(
+              children: [
+                HomeScreenHeader(),
+                Expanded(child: HomeScreenBody()),
+              ],
+            ),
+          );
+        });
   }
 }

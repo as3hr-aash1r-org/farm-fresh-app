@@ -22,7 +22,7 @@ class ProductModel {
 
   factory ProductModel.fromJson(Map<String, dynamic> json) => ProductModel(
         id: json["id"],
-        name: json["name"],
+        name: json["type"],
         inStock: json["stock"],
         image: [
           AppImages.mango1,
@@ -44,6 +44,7 @@ class ProductModel {
           double? price,
           int? quantity}) =>
       ProductModel(
+        id: id,
         quantity: quantity ?? this.quantity,
         name: title ?? name,
         image: image ?? this.image,

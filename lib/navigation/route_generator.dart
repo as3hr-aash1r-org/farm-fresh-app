@@ -31,7 +31,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return getRoute(BottomBar(), TransitionType.fade);
 
     case RouteName.cart:
-      return getRoute(const CartScreen(), TransitionType.fade);
+      return getRoute(CartScreen(), TransitionType.fade);
 
     case RouteName.checkout:
       return getRoute(const CheckoutScreen(), TransitionType.fade);

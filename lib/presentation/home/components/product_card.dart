@@ -2,15 +2,21 @@ import 'package:farm_fresh_shop_app/data/model/product_json.dart';
 import 'package:farm_fresh_shop_app/helpers/styles/app_images.dart';
 import 'package:farm_fresh_shop_app/helpers/utils.dart';
 import 'package:farm_fresh_shop_app/helpers/widgets/farm_fresh_asset.dart';
+import 'package:farm_fresh_shop_app/presentation/cart/cart_cubit.dart';
+import 'package:farm_fresh_shop_app/presentation/home/home_cubit.dart';
 import 'package:flutter/material.dart';
+import '../../../initializer.dart';
+import '../home_state.dart';
+import 'delivery_type_dialog.dart';
+import 'quantity_select_dialouge.dart';
 
 class ProductCard extends StatelessWidget {
-  const ProductCard({super.key, required this.book});
-  final ProductModel book;
+  const ProductCard({super.key, required this.product});
+  final ProductModel product;
 
   @override
   Widget build(BuildContext context) {
-    final isOutOfStock = (book.inStock ?? 0) == 0;
+    final isOutOfStock = (product.inStock ?? 0) == 0;
 
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -32,7 +38,7 @@ class ProductCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 AspectRatio(
-                  aspectRatio: 1, // square card
+                  aspectRatio: 1,
                   child: ClipRRect(
                     borderRadius:
                         const BorderRadius.vertical(top: Radius.circular(16)),
@@ -40,7 +46,8 @@ class ProductCard extends StatelessWidget {
                       color: getRandomMangoColor,
                       child: Center(
                         child: FarmFreshAsset(
-                          image: book.image ?? AppImages.mango1,
+                          image: product.image ?? AppImages.mango1,
+                          svg: false,
                         ),
                       ),
                     ),
@@ -50,7 +57,7 @@ class ProductCard extends StatelessWidget {
                   padding:
                       const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8),
                   child: Text(
-                    book.name ?? '',
+                    product.name ?? '',
                     style: const TextStyle(fontWeight: FontWeight.bold),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
@@ -62,12 +69,38 @@ class ProductCard extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        "\$${book.price?.toStringAsFixed(2) ?? '0.00'}/box",
+                        "\$${product.price?.toStringAsFixed(2) ?? '0.00'}/box",
                         style: const TextStyle(fontWeight: FontWeight.bold),
                       ),
-                      IconButton(
-                        onPressed: isOutOfStock ? null : () {},
-                        icon: Icon(
+                      GestureDetector(
+                        onTap: isOutOfStock
+                            ? null
+                            : () async {
+                                final deliveryType =
+                                    sl<HomeCubit>().state.selectedDeliveryType;
+                                if (deliveryType == DeliveryType.none) {
+                                  await showDialog(
+                                    context: context,
+                                    builder: (_) => const DeliveryTypeDialog(),
+                                  );
+                                } else {
+                                  final cartCubit = sl<CartCubit>();
+                                  final existingIndex = cartCubit.state.products
+                                      .indexWhere((b) => b.id == product.id);
+                                  print(existingIndex);
+                                  if (existingIndex != -1) {
+                                    showToast("Product already added to cart");
+                                    return;
+                                  } else {
+                                    await showDialog(
+                                      context: context,
+                                      builder: (_) => QuantitySelectorDialog(
+                                          product: product),
+                                    );
+                                  }
+                                }
+                              },
+                        child: Icon(
                           Icons.shopping_basket,
                           color: isOutOfStock ? Colors.grey : Colors.green,
                         ),

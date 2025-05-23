@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../helpers/styles/app_color.dart';
+import '../../../../../initializer.dart';
 import '../../../cart_cubit.dart';
 import '../../../cart_state.dart';
 
 class CheckoutBody extends StatelessWidget {
   const CheckoutBody({super.key});
 
+  static final cartCubit = sl<CartCubit>();
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<CartCubit, CartState>(
+      bloc: cartCubit,
       builder: (context, state) {
         return Expanded(
           child: ListView.builder(

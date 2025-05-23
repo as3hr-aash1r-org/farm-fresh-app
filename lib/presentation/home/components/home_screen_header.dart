@@ -4,20 +4,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../helpers/styles/app_color.dart';
 import '../../../helpers/styles/app_images.dart';
+import '../../../initializer.dart';
 import '../../cart/cart_cubit.dart';
 import '../../cart/cart_state.dart';
 import '../home_cubit.dart';
 import '../home_state.dart';
+import 'delivery_type_dialog.dart';
 
 class HomeScreenHeader extends StatelessWidget {
   const HomeScreenHeader({super.key});
 
+  static final homeCubit = sl<HomeCubit>();
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<HomeCubit, HomeState>(
+      bloc: homeCubit,
       builder: (context, state) {
-        final homeCubit = context.read<HomeCubit>();
-        final cartCubit = context.read<CartCubit>();
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -36,14 +39,15 @@ class HomeScreenHeader extends StatelessWidget {
                     AppNavigation.push(RouteName.cart);
                   },
                   child: BlocBuilder<CartCubit, CartState>(
-                    bloc: cartCubit,
+                    bloc: sl<CartCubit>(),
                     builder: (context, state) {
                       return Stack(
                         clipBehavior: Clip.none,
                         children: [
                           Image.asset(
                             AppImages.cart,
-                            width: 24,
+                            width: 28,
+                            scale: 0.2,
                             color: AppColor.primary,
                           ),
                           Positioned(
@@ -72,7 +76,48 @@ class HomeScreenHeader extends StatelessWidget {
                 const SizedBox(width: 5),
               ],
             ),
-            const SizedBox(height: 24),
+            const SizedBox(height: 5),
+            Row(
+              children: [
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.only(bottom: 16),
+                    child: DropdownButtonFormField<DeliveryType>(
+                      value: state.selectedDeliveryType == DeliveryType.none
+                          ? null
+                          : state.selectedDeliveryType,
+                      hint: const Text("Select delivery type"),
+                      decoration: InputDecoration(
+                        filled: true,
+                        fillColor: Colors.grey[100],
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: BorderSide.none,
+                        ),
+                      ),
+                      items: const [
+                        DropdownMenuItem(
+                          value: DeliveryType.pickup,
+                          child: Text("Pickup"),
+                        ),
+                        DropdownMenuItem(
+                          value: DeliveryType.doorstep,
+                          child: Text("Doorstep"),
+                        ),
+                      ],
+                      onChanged: (value) {
+                        showDialog(
+                          context: context,
+                          builder: (_) => const DeliveryTypeDialog(),
+                        );
+                      },
+                    ),
+                  ),
+                ),
+                Spacer(),
+              ],
+            ),
+            const SizedBox(height: 5),
             TextField(
               decoration: InputDecoration(
                 hintText: 'Search',

@@ -5,17 +5,9 @@ import 'cart_state.dart';
 class CartCubit extends Cubit<CartState> {
   CartCubit() : super(CartState.empty());
 
-  void addBookToCart(ProductModel product) {
-    final existingIndex =
-        state.products.indexWhere((b) => b.name == product.name);
-    if (existingIndex != -1) {
-      final updatedProducts = List<ProductModel>.from(state.products);
-      final updatedBook = updatedProducts[existingIndex].copyWith(
-        quantity: updatedProducts[existingIndex].quantity + 1,
-      );
-      updatedProducts[existingIndex] = updatedBook;
-      emit(state.copyWith(products: updatedProducts));
-    } else {
+  void addMangoToCart(ProductModel product) {
+    final existingIndex = state.products.indexWhere((b) => b.id == product.id);
+    if (existingIndex == -1) {
       emit(state.copyWith(products: [...state.products, product]));
     }
   }
@@ -40,7 +32,7 @@ class CartCubit extends Cubit<CartState> {
     }
     final updatedProducts = state.products
         .map((b) {
-          if (b.name == product.name && b.quantity > 1) {
+          if (b.id == product.id && b.quantity > 1) {
             return b.copyWith(quantity: b.quantity - 1);
           }
           return b;
@@ -52,7 +44,7 @@ class CartCubit extends Cubit<CartState> {
 
   void removeBookFromCart(ProductModel product) {
     final updatedProducts =
-        state.products.where((b) => b.name != product.name).toList();
+        state.products.where((b) => b.id != product.id).toList();
     emit(state.copyWith(products: updatedProducts));
   }
 

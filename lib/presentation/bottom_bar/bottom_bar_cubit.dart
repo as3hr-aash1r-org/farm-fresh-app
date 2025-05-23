@@ -1,3 +1,4 @@
+import 'package:farm_fresh_shop_app/initializer.dart';
 import 'package:farm_fresh_shop_app/navigation/app_navigation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -13,5 +14,11 @@ class BottomBarCubit extends Cubit<BottomBarState> {
   void exitApp() {
     emit(state.copyWith(canPop: true));
     AppNavigation.exitApp();
+  }
+
+  @override
+  Future<void> close() async {
+    await Initializer.dispose();
+    return super.close();
   }
 }
