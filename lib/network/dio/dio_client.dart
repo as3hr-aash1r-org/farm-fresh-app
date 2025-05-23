@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:farm_fresh_shop_app/initializer.dart';
 import 'package:farm_fresh_shop_app/navigation/app_navigation.dart';
 import 'package:farm_fresh_shop_app/navigation/route_name.dart';
 import 'package:flutter/foundation.dart';
@@ -38,6 +39,8 @@ class DioClient {
           retryInterval: const Duration(seconds: retryDelay),
           retryEvaluator: (error) async {
             if (error.response?.statusCode == 401) {
+              localStorageRepository.deleteValue("token");
+              localStorageRepository.deleteValue("user");
               AppNavigation.pushReplacement(RouteName.login);
               return false;
             }

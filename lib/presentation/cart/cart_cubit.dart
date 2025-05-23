@@ -60,8 +60,8 @@ class CartCubit extends Cubit<CartState> {
     emit(CartState.empty());
   }
 
-  double get totalPrice => state.products.fold(
-      0.0, (sum, product) => sum + (product.price ?? 0.0) * product.quantity);
+  double get totalPrice =>
+      state.products.fold(0.0, (sum, product) => sum + (product.price ?? 0.0));
 
   void placeOrder() {
     final homeState = sl<HomeCubit>().state;

@@ -118,7 +118,12 @@ class HomeScreenHeader extends StatelessWidget {
                           fillColor: Colors.grey[100],
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(12),
-                            borderSide: BorderSide.none,
+                            borderSide: BorderSide(
+                              color: state.selectedDeliveryType ==
+                                      DeliveryType.none
+                                  ? Colors.grey[100]!
+                                  : AppColor.darkBlue,
+                            ),
                           ),
                         ),
                         child: Row(
@@ -131,14 +136,12 @@ class HomeScreenHeader extends StatelessWidget {
                                       ? "Pickup"
                                       : "Doorstep"),
                               style: TextStyle(
-                                color: state.selectedDeliveryType ==
-                                        DeliveryType.none
-                                    ? Colors.grey
-                                    : Colors.black,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
                               ),
                             ),
                             const Spacer(),
-                            const Icon(Icons.arrow_drop_down),
+                            Icon(Icons.arrow_drop_down, color: Colors.black),
                           ],
                         ),
                       ),

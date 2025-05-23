@@ -42,10 +42,7 @@ class BottomBar extends StatelessWidget {
               body: SafeArea(
                   child: Stack(
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 60),
-                    child: state.page,
-                  ),
+                  state.page,
                   if (MediaQuery.of(context).viewInsets.bottom == 0)
                     Positioned(
                         bottom: 0,

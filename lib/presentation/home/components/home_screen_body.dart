@@ -27,6 +27,7 @@ class HomeScreenBody extends StatelessWidget {
                 child: ScrollShaderMask(
                   child: GridView.builder(
                     shrinkWrap: true,
+                    padding: const EdgeInsets.only(bottom: 60),
                     physics: const NeverScrollableScrollPhysics(),
                     gridDelegate:
                         const SliverGridDelegateWithFixedCrossAxisCount(
