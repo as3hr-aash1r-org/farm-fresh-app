@@ -75,37 +75,11 @@ class _PaymentBottomSheetState extends State<PaymentBottomSheet> {
     }
 
     String cleanValue = value.replaceAll(' ', '');
-    if (cleanValue.length < 13 || cleanValue.length > 19) {
+    if (cleanValue.length < 11 || cleanValue.length > 16) {
       return 'Invalid card number length';
     }
 
-    if (!_isValidLuhn(cleanValue)) {
-      return 'Invalid card number';
-    }
-
     return null;
-  }
-
-  // Luhn algorithm implementation
-  bool _isValidLuhn(String cardNumber) {
-    int sum = 0;
-    bool alternate = false;
-
-    for (int i = cardNumber.length - 1; i >= 0; i--) {
-      int digit = int.parse(cardNumber[i]);
-
-      if (alternate) {
-        digit *= 2;
-        if (digit > 9) {
-          digit = (digit % 10) + 1;
-        }
-      }
-
-      sum += digit;
-      alternate = !alternate;
-    }
-
-    return (sum % 10) == 0;
   }
 
   String? _validateExpiryDate(String? value) {

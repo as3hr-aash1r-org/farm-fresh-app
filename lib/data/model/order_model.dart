@@ -96,13 +96,10 @@ class PaymentModel {
   });
 
   Map<String, dynamic> toJson() => {
-        "first_name": firstName,
-        "last_name": lastName,
-        // "card_code": cvc,
-        // "card_number": cardNumber,
-        // "expiration_date": expiryDate
-        "card_number": "4111111111111111",
-        "expiration_date": "1225",
-        "card_code": "123",
+        "first_name": firstName.trim(),
+        "last_name": lastName.trim(),
+        "card_code": cvc.trim(),
+        "card_number": cardNumber.trim(),
+        "expiration_date": expiryDate.trim()
       };
 }

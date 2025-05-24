@@ -1,4 +1,5 @@
 import 'package:farm_fresh_shop_app/helpers/styles/app_color.dart';
+import 'package:farm_fresh_shop_app/presentation/bottom_bar/bottom_bar_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -192,7 +193,7 @@ class _EmptyOrdersView extends StatelessWidget {
           const SizedBox(height: 32),
           ElevatedButton.icon(
             onPressed: () {
-              // Navigate to shop or home
+              context.read<BottomBarCubit>().updateIndex(0);
             },
             icon: const Icon(Icons.storefront),
             label: const Text('Start Shopping'),

@@ -79,7 +79,7 @@ class LoginScreen extends StatelessWidget {
                         child: const Text(
                           'Create an Account',
                           style: TextStyle(
-                              color: AppColor.primary,
+                              color: AppColor.green,
                               fontWeight: FontWeight.w500),
                         ),
                       ),

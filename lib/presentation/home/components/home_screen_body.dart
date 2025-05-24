@@ -28,7 +28,9 @@ class HomeScreenBody extends StatelessWidget {
             children: [
               const SizedBox(height: 16),
               if (isLoading)
-                Center(child: CircularProgressIndicator())
+                Center(
+                    child:
+                        CircularProgressIndicator(color: getRandomMangoColor))
               else if (isEmpty)
                 Center(child: Text("No Products Found!"))
               else
