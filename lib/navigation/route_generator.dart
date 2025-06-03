@@ -2,7 +2,10 @@
 
 import 'package:farm_fresh_shop_app/navigation/route_name.dart';
 import 'package:farm_fresh_shop_app/presentation/auth/login/login_screen.dart';
+import 'package:farm_fresh_shop_app/presentation/auth/register/forget_password.dart';
 import 'package:farm_fresh_shop_app/presentation/auth/register/register_screen.dart';
+import 'package:farm_fresh_shop_app/presentation/auth/register/reset_password.dart';
+import 'package:farm_fresh_shop_app/presentation/auth/register/verify_otp.dart';
 import 'package:farm_fresh_shop_app/presentation/bottom_bar/bottom_bar.dart';
 import 'package:farm_fresh_shop_app/presentation/cart/cart_screen.dart';
 import 'package:farm_fresh_shop_app/presentation/cart/components/order_success.dart';
@@ -25,13 +28,16 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return getRoute(const LoginScreen(), TransitionType.fade);
     case RouteName.register:
       return getRoute(const RegisterScreen(), TransitionType.fade);
-
+    case RouteName.verifyOtp:
+      return getRoute(VerifyOtp(), TransitionType.fade);
+    case RouteName.forgetPassword:
+      return getRoute(ForgetPassword(), TransitionType.fade);
+    case RouteName.resetPassword:
+      return getRoute(ResetPassword(), TransitionType.fade);
     case RouteName.bottomBar:
       return getRoute(BottomBar(), TransitionType.fade);
-
     case RouteName.cart:
       return getRoute(CartScreen(), TransitionType.fade);
-
     case RouteName.successOrder:
       return getRoute(
           OrderSuccessScreen(amount: args['amount']), TransitionType.fade);

@@ -76,37 +76,15 @@ class ProductCard extends StatelessWidget {
                       ),
                       child: Stack(
                         children: [
-                          // Decorative pattern
-                          Positioned(
-                            top: -20,
-                            right: -20,
-                            child: Container(
-                              width: 80,
-                              height: 80,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: Colors.white.withOpacity(0.1),
-                              ),
-                            ),
-                          ),
-                          Positioned(
-                            bottom: -30,
-                            left: -30,
-                            child: Container(
-                              width: 100,
-                              height: 100,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: Colors.white.withOpacity(0.05),
-                              ),
-                            ),
-                          ),
                           // Product image
                           Center(
                             child: Container(
+                              width: double.maxFinite,
+                              height: double.maxFinite,
+                              color: Colors.white,
                               padding: const EdgeInsets.all(16),
                               child: FarmFreshAsset(
-                                image: product.image ?? AppImages.mango1,
+                                image: product.image ?? AppImages.chaunsa,
                                 svg: false,
                               ),
                             ),
@@ -219,11 +197,10 @@ class ProductCard extends StatelessWidget {
                                   );
                                 } else {
                                   final cartCubit = sl<CartCubit>();
-                                  final existingIndex = cartCubit.state.products
-                                      .indexWhere((b) => b.id == product.id);
-                                  print(existingIndex);
-                                  if (existingIndex != -1) {
-                                    showToast("Product already added to cart");
+                                  final existingIndex =
+                                      cartCubit.state.products.length > 0;
+                                  if (existingIndex) {
+                                    showToast("Cart already has items");
                                     return;
                                   } else {
                                     await showDialog(

@@ -19,6 +19,7 @@ class Initializer {
 
   static Future<void> dispose() async {
     await sl.reset(dispose: true);
+    await init();
     localStorageRepository.deleteValue("token");
     localStorageRepository.deleteValue("user");
   }

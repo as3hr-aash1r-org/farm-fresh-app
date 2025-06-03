@@ -45,4 +45,8 @@ class RegisterScreenCubit extends Cubit<RegisterScreenState> {
           ),
         );
   }
+
+  void onForgetPassword() {}
+  void onVerifyOtp() {}
+  void onResetPassword() {}
 }

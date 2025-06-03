@@ -1,4 +1,3 @@
-import 'dart:math';
 import 'package:farm_fresh_shop_app/helpers/styles/app_images.dart';
 
 class ProductModel {
@@ -20,25 +19,26 @@ class ProductModel {
     this.price,
   });
 
-  factory ProductModel.fromJson(Map<String, dynamic> json) => ProductModel(
-        id: json["id"],
-        name: json["type"],
-        inStock: json["stock"],
-        image: [
-          AppImages.mango1,
-          AppImages.mango2,
-          AppImages.mango7,
-          AppImages.mango4,
-          AppImages.mango5,
-          AppImages.mango6,
-          AppImages.mango7,
-          AppImages.mango8,
-          AppImages.mango9,
-          AppImages.mango10
-        ][Random().nextInt(10)],
-        description: json["description"],
-        price: json["price"]?.toDouble(),
-      );
+  factory ProductModel.fromJson(Map<String, dynamic> json) {
+    final type = json["type"].toString().toLowerCase();
+    final image = type == "chaunsa"
+        ? AppImages.chaunsa
+        : type == "langra"
+            ? AppImages.langra
+            : type == "sindhri"
+                ? AppImages.sindhri
+                : type == "ratol"
+                    ? AppImages.ratol
+                    : AppImages.chaunsa;
+    return ProductModel(
+      id: json["id"],
+      name: json["type"],
+      inStock: json["stock"],
+      image: image,
+      description: json["description"],
+      price: json["price"]?.toDouble(),
+    );
+  }
 
   copyWith(
           {String? title,

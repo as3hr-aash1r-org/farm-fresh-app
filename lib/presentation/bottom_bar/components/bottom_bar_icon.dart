@@ -25,7 +25,7 @@ class BottomBarIcon extends StatelessWidget {
           onTap: () => cubit.updateIndex(index),
           child: Image.asset(
             item.image,
-            height: 20,
+            height: 25,
             color: isSelected ? AppColor.primary : Colors.grey,
           ));
     });
