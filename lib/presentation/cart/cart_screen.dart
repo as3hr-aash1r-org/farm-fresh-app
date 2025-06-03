@@ -2,6 +2,7 @@ import 'package:farm_fresh_shop_app/helpers/styles/app_color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../initializer.dart';
+import '../home/home_cubit.dart';
 import 'components/cart_product_container.dart';
 import 'cart_cubit.dart';
 import 'cart_state.dart';
@@ -84,11 +85,16 @@ class CartScreen extends StatelessWidget {
                               ),
                             ),
                             onPressed: () {
+                              final homeState = sl<HomeCubit>().state;
                               showModalBottomSheet(
                                 context: context,
                                 isScrollControlled: true,
                                 backgroundColor: Colors.transparent,
                                 builder: (context) => PaymentBottomSheet(
+                                  stateZip: homeState.zipCode,
+                                  email: homeState.user.email ?? "",
+                                  state: homeState.selectedState,
+                                  airportName: homeState.selectedAirport,
                                   totalAmount: cartCubit.totalPrice,
                                   onPaymentSuccess: (payment) {
                                     print('Payment completed successfully!');

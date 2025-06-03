@@ -5,11 +5,19 @@ import 'package:flutter/services.dart';
 
 class PaymentBottomSheet extends StatefulWidget {
   final double totalAmount;
+  final String email;
+  final String? airportName;
+  final String? state;
+  final String? stateZip;
   final void Function(PaymentModel payment)? onPaymentSuccess;
 
   const PaymentBottomSheet({
     Key? key,
     required this.totalAmount,
+    required this.email,
+    this.airportName,
+    this.state,
+    this.stateZip,
     this.onPaymentSuccess,
   }) : super(key: key);
 
@@ -24,6 +32,8 @@ class _PaymentBottomSheetState extends State<PaymentBottomSheet> {
   final _cardNumberController = TextEditingController();
   final _expiryController = TextEditingController();
   final _cvcController = TextEditingController();
+  final _addressController = TextEditingController();
+  final _phoneController = TextEditingController();
 
   bool _isProcessing = false;
   String _cardType = '';
@@ -35,6 +45,8 @@ class _PaymentBottomSheetState extends State<PaymentBottomSheet> {
     _cardNumberController.dispose();
     _expiryController.dispose();
     _cvcController.dispose();
+    _addressController.dispose();
+    _phoneController.dispose();
     super.dispose();
   }
 
@@ -138,6 +150,41 @@ class _PaymentBottomSheetState extends State<PaymentBottomSheet> {
     return null;
   }
 
+  String? _validateAddress(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Address is required';
+    }
+
+    if (value.length < 10) {
+      return 'Address too short';
+    }
+
+    return null;
+  }
+
+  String? _validatePhone(String? value) {
+    if (value == null || value.trim().isEmpty) {
+      return 'Phone number is required';
+    }
+
+    final cleaned = value.replaceAll(RegExp(r'[\s\-\.\(\)]'), '');
+
+    if (!RegExp(r'^\+?[0-9]+$').hasMatch(cleaned)) {
+      return 'Phone number contains invalid characters';
+    }
+
+    if (cleaned.contains('+') && !cleaned.startsWith('+')) {
+      return 'Invalid placement of "+"';
+    }
+
+    final digitsOnly = cleaned.replaceAll('+', '');
+    if (digitsOnly.length < 7 || digitsOnly.length > 15) {
+      return 'Phone number must be between 7 and 15 digits';
+    }
+
+    return null;
+  }
+
   Future<void> _processPayment() async {
     if (!_formKey.currentState!.validate()) return;
 
@@ -157,6 +204,8 @@ class _PaymentBottomSheetState extends State<PaymentBottomSheet> {
       cvc: _cvcController.text,
       cardNumber: _cardNumberController.text,
       expiryDate: _expiryController.text,
+      phone: "",
+      address: "",
     );
 
     Navigator.pop(context);
@@ -258,6 +307,53 @@ class _PaymentBottomSheetState extends State<PaymentBottomSheet> {
                           ),
                         ),
                         const SizedBox(height: 24),
+                        const Text(
+                          'Email',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.black87,
+                          ),
+                        ),
+                        const SizedBox(height: 8),
+                        TextFormField(
+                          controller: TextEditingController(text: widget.email),
+                          enabled: false,
+                          decoration: InputDecoration(
+                            hintText: '',
+                            prefixIcon: const Icon(Icons.credit_card),
+                            suffixIcon: _cardType.isNotEmpty
+                                ? Padding(
+                                    padding: const EdgeInsets.all(12),
+                                    child: Container(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 8, vertical: 4),
+                                      decoration: BoxDecoration(
+                                        color: Colors.grey[100],
+                                        borderRadius: BorderRadius.circular(4),
+                                      ),
+                                      child: Text(
+                                        _cardType,
+                                        style: const TextStyle(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
+                                    ),
+                                  )
+                                : null,
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12),
+                              borderSide: const BorderSide(
+                                  color: AppColor.primary, width: 2),
+                            ),
+                          ),
+                        ),
+
+                        const SizedBox(height: 24),
                         Row(
                           children: [
                             Expanded(
@@ -317,6 +413,78 @@ class _PaymentBottomSheetState extends State<PaymentBottomSheet> {
                                     hintText: 'Enter last name',
                                     prefixIcon:
                                         const Icon(Icons.person_outline),
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(12),
+                                      borderSide: BorderSide(
+                                          color: AppColor.primary, width: 2),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            )),
+                          ],
+                        ),
+
+                        const SizedBox(height: 20),
+                        Row(
+                          children: [
+                            Expanded(
+                                child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Text(
+                                  'Phone Number',
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.black87,
+                                  ),
+                                ),
+                                const SizedBox(height: 8),
+                                TextFormField(
+                                  controller: _phoneController,
+                                  validator: _validatePhone,
+                                  textCapitalization: TextCapitalization.words,
+                                  decoration: InputDecoration(
+                                    hintText: 'Enter Phone Number',
+                                    prefixIcon: const Icon(Icons.phone),
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(12),
+                                      borderSide: BorderSide(
+                                          color: AppColor.primary, width: 2),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            )),
+                            const SizedBox(width: 5),
+                            Expanded(
+                                child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Text(
+                                  'Shipping Address',
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.black87,
+                                  ),
+                                ),
+                                const SizedBox(height: 8),
+                                TextFormField(
+                                  controller: _addressController,
+                                  validator: _validateAddress,
+                                  textCapitalization: TextCapitalization.words,
+                                  decoration: InputDecoration(
+                                    hintText: 'Enter Shipping address',
+                                    prefixIcon:
+                                        const Icon(Icons.location_on_outlined),
                                     border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(12),
                                     ),
@@ -500,6 +668,121 @@ class _PaymentBottomSheetState extends State<PaymentBottomSheet> {
                           ],
                         ),
                         const SizedBox(height: 32),
+
+                        Row(
+                          children: [
+                            if (widget.state != null)
+                              Expanded(
+                                  child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const Text(
+                                    'State',
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w600,
+                                      color: Colors.black87,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 8),
+                                  TextFormField(
+                                    enabled: false,
+                                    controller: TextEditingController(
+                                        text: widget.state),
+                                    textCapitalization:
+                                        TextCapitalization.words,
+                                    decoration: InputDecoration(
+                                      hintText: '',
+                                      prefixIcon:
+                                          const Icon(Icons.location_city),
+                                      border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(12),
+                                      ),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(12),
+                                        borderSide: BorderSide(
+                                            color: AppColor.primary, width: 2),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              )),
+                            const SizedBox(width: 5),
+                            if (widget.stateZip != null)
+                              Expanded(
+                                  child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const Text(
+                                    'State zip code',
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w600,
+                                      color: Colors.black87,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 8),
+                                  TextFormField(
+                                    enabled: false,
+                                    controller: TextEditingController(
+                                        text: widget.stateZip),
+                                    textCapitalization:
+                                        TextCapitalization.words,
+                                    decoration: InputDecoration(
+                                      prefixIcon:
+                                          const Icon(Icons.location_city),
+                                      border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(12),
+                                      ),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(12),
+                                        borderSide: BorderSide(
+                                            color: AppColor.primary, width: 2),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              )),
+                            const SizedBox(width: 5),
+                            if (widget.airportName != null)
+                              Expanded(
+                                  child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const Text(
+                                    'Airport Name',
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w600,
+                                      color: Colors.black87,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 8),
+                                  TextFormField(
+                                    enabled: false,
+                                    controller: TextEditingController(
+                                        text: widget.airportName),
+                                    textCapitalization:
+                                        TextCapitalization.words,
+                                    decoration: InputDecoration(
+                                      prefixIcon:
+                                          const Icon(Icons.airplanemode_active),
+                                      border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(12),
+                                      ),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(12),
+                                        borderSide: BorderSide(
+                                            color: AppColor.primary, width: 2),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              )),
+                          ],
+                        ),
+
+                        const SizedBox(height: 20),
 
                         // Payment Button
                         SizedBox(

@@ -78,6 +78,8 @@ class PaymentModel {
   String cvc;
   String cardNumber;
   String expiryDate;
+  String phone;
+  String address;
 
   factory PaymentModel.empty() => PaymentModel(
         firstName: "",
@@ -85,6 +87,8 @@ class PaymentModel {
         cvc: "",
         cardNumber: "",
         expiryDate: "",
+        phone: "",
+        address: "",
       );
 
   PaymentModel({
@@ -93,6 +97,8 @@ class PaymentModel {
     required this.cvc,
     required this.cardNumber,
     required this.expiryDate,
+    required this.phone,
+    required this.address,
   });
 
   Map<String, dynamic> toJson() => {
@@ -100,6 +106,8 @@ class PaymentModel {
         "last_name": lastName.trim(),
         "card_code": cvc.trim(),
         "card_number": cardNumber.trim(),
-        "expiration_date": expiryDate.trim()
+        "expiration_date": expiryDate.trim(),
+        "phone": phone.trim(),
+        "shipping_address": address.trim(),
       };
 }
