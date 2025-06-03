@@ -83,7 +83,8 @@ class CartCubit extends Cubit<CartState> {
     emit(state.copyWith(isLoading: true));
     appData.createOrder(order: order).then((response) => response.fold((l) {
           emit(state.copyWith(isLoading: false));
-          showToast(l);
+          showToast(
+              "Failed to place order right now\nre-check your card number or other details");
         }, (r) {
           AppNavigation.pushReplacement(RouteName.successOrder, arguments: {
             "amount": totalPrice,

@@ -118,4 +118,11 @@ class HomeCubit extends Cubit<HomeState> {
       },
     );
   }
+
+  @override
+  Future<void> close() async {
+    debouncer.cancel();
+    emit(HomeState.empty());
+    super.close();
+  }
 }

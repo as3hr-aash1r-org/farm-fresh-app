@@ -34,6 +34,21 @@ class HomeScreenHeader extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
+                const SizedBox(width: 10),
+                InkWell(
+                  onTap: () async {
+                    final shouldProceed = await showConfirmationDialog(
+                        "Are you sure you want to logout?");
+                    if (shouldProceed) {
+                      AppNavigation.pushReplacement(RouteName.login);
+                    }
+                  },
+                  child: Icon(
+                    Icons.power_settings_new_outlined,
+                    color: Colors.red,
+                    size: 20,
+                  ),
+                ),
                 const Spacer(),
                 InkWell(
                   onTap: () {
