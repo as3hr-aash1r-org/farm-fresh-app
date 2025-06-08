@@ -15,10 +15,9 @@ import 'delivery_type_dialog.dart';
 class HomeScreenHeader extends StatelessWidget {
   const HomeScreenHeader({super.key});
 
-  static final homeCubit = sl<HomeCubit>();
-
   @override
   Widget build(BuildContext context) {
+    final homeCubit = sl<HomeCubit>();
     return BlocBuilder<HomeCubit, HomeState>(
       bloc: homeCubit,
       builder: (context, state) {

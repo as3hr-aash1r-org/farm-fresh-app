@@ -18,9 +18,12 @@ class Initializer {
   }
 
   static Future<void> dispose() async {
+    sl<CartCubit>().setEmpty();
+    sl<HomeCubit>().setEmpty();
+    sl<OrderCubit>().setEmpty();
     await sl.reset(dispose: true);
-    await init();
     localStorageRepository.deleteValue("token");
     localStorageRepository.deleteValue("user");
+    await init();
   }
 }

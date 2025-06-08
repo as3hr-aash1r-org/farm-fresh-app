@@ -24,8 +24,11 @@ class HomeCubit extends Cubit<HomeState> {
 
   void initHome() async {
     final user = await localStorageRepository.getValue("user");
-    user.fold((l) => null,
-        (r) => emit(state.copyWith(user: UserModel.fromJson(jsonDecode(r)))));
+    user.fold((l) {
+      return null;
+    }, (r) {
+      emit(state.copyWith(user: UserModel.fromJson(jsonDecode(r))));
+    });
   }
 
   Future<void> fetchData({String? search}) async {
@@ -119,10 +122,11 @@ class HomeCubit extends Cubit<HomeState> {
     );
   }
 
+  void setEmpty() => emit(HomeState.empty());
+
   @override
   Future<void> close() async {
     debouncer.cancel();
-    emit(HomeState.empty());
     super.close();
   }
 }

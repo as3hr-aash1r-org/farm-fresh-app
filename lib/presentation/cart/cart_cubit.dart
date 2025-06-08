@@ -91,4 +91,6 @@ class CartCubit extends Cubit<CartState> {
           });
         }));
   }
+
+  void setEmpty() => emit(CartState.empty());
 }

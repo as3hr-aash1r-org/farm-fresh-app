@@ -22,4 +22,6 @@ class OrderCubit extends Cubit<OrderState> {
           ),
         );
   }
+
+  void setEmpty() => emit(OrderState.initial());
 }
