@@ -330,7 +330,8 @@ class _OrderCardState extends State<_OrderCard>
                           borderRadius: BorderRadius.circular(8),
                         ),
                         child: Icon(
-                          _getDeliveryIcon(widget.order.deliveryType),
+                          _getDeliveryIcon(
+                              widget.order.deliveryType ?? "PickUp"),
                           color: AppColor.primary,
                           size: 20,
                         ),

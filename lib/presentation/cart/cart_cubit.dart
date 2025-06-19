@@ -3,6 +3,7 @@ import 'package:farm_fresh_shop_app/data/model/product_json.dart';
 import 'package:farm_fresh_shop_app/helpers/utils.dart';
 import 'package:farm_fresh_shop_app/navigation/route_name.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../data/model/order_model.dart';
 import '../../initializer.dart';
 import '../../navigation/app_navigation.dart';
 import '../home/home_cubit.dart';
@@ -65,12 +66,19 @@ class CartCubit extends Cubit<CartState> {
   void placeOrder() {
     final homeState = sl<HomeCubit>().state;
     emit(state.copyWith(isLoading: true));
-    appData
-        .checkOut(
-          amount: totalPrice.toString(),
-          airportName: homeState.selectedAirport ?? "",
-        )
-        .then(
+    final order = OrderModel(
+      amount: totalPrice,
+      airportName: homeState.selectedAirport,
+      items: state.products
+          .map((product) => OrderItem(
+                type: product.name!,
+                productId: product.id!,
+                quantity: product.quantity,
+                totalPrice: product.price!,
+              ))
+          .toList(),
+    );
+    appData.checkOut(order: order).then(
           (response) => response.fold(
             (error) {
               emit(state.copyWith(isLoading: false));
@@ -86,21 +94,6 @@ class CartCubit extends Cubit<CartState> {
             },
           ),
         );
-    // final order = OrderModel(
-    //   amount: totalPrice,
-    //   deliveryType: homeState.selectedDeliveryType.name.toLowerCase(),
-    //   shippingState: homeState.selectedState,
-    //   shippingZipCode: homeState.zipCode,
-    //   airportName: homeState.selectedAirport,
-    //   items: state.products
-    //       .map((product) => OrderItem(
-    //             productId: product.id!,
-    //             quantity: product.quantity,
-    //             totalPrice: product.price!,
-    //           ))
-    //       .toList(),
-    //   payment: payment,
-    // );
     // appData.createOrder(order: order).then((response) => response.fold((l) {
     //       emit(state.copyWith(isLoading: false));
     //       showToast(

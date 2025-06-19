@@ -1,9 +1,8 @@
 import 'package:dio/dio.dart';
-import 'package:farm_fresh_shop_app/navigation/app_navigation.dart';
-import 'package:farm_fresh_shop_app/navigation/route_name.dart';
 import 'package:flutter/foundation.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart' show PrettyDioLogger;
 import '../../helpers/constants.dart';
+import '../../initializer.dart';
 import '../network_response.dart';
 import 'interceptors/dio_retry_interceptor.dart';
 import 'interceptors/network_interceptor.dart';
@@ -38,7 +37,7 @@ class DioClient {
           retryInterval: const Duration(seconds: retryDelay),
           retryEvaluator: (error) async {
             if (error.response?.statusCode == 401) {
-              AppNavigation.pushReplacement(RouteName.login);
+              await Initializer.dispose();
               return false;
             }
             // if (error.type == DioExceptionType.connectionError ||
@@ -69,8 +68,11 @@ class DioClient {
     dynamic data;
     print("Error: ${error.response}");
     if (error.response?.data != null) {
-      final responseData = error.response!.data;
-      // message = responseData["detail"] ?? "Unknown error occurred";
+      final responseData = error.response?.data;
+      message =
+          responseData is Map<String, dynamic> && responseData["detail"] != null
+              ? responseData["detail"]
+              : "Unknown error occurred";
       data = responseData;
     } else {
       switch (error.type) {

@@ -1,8 +1,5 @@
-import 'dart:convert';
 import 'dart:developer';
-
 import 'package:bloc/bloc.dart';
-import 'package:farm_fresh_shop_app/data/model/user_model.dart';
 import 'package:farm_fresh_shop_app/initializer.dart';
 import 'package:farm_fresh_shop_app/helpers/debouncer.dart';
 import 'package:farm_fresh_shop_app/helpers/utils.dart';
@@ -15,20 +12,20 @@ class HomeCubit extends Cubit<HomeState> {
   final appData = FarmFreshAppData();
   final debouncer = Debouncer(delay: Duration(milliseconds: 500));
 
-  HomeCubit() : super(HomeState.empty()) {
-    initHome();
-    fetchData();
-    fetchStates();
-    fetchAirports();
+  HomeCubit() : super(HomeState.empty());
+
+  Future<void> getAllData() async {
+    Future.wait([
+      initHome(),
+      fetchData(),
+      fetchStates(),
+      fetchAirports(),
+    ]);
   }
 
-  void initHome() async {
-    final user = await localStorageRepository.getValue("user");
-    user.fold((l) {
-      return null;
-    }, (r) {
-      emit(state.copyWith(user: UserModel.fromJson(jsonDecode(r))));
-    });
+  Future<void> initHome() async {
+    final user = await localStorageRepository.getUser();
+    emit(state.copyWith(user: user));
   }
 
   Future<void> fetchData({String? search}) async {
@@ -44,14 +41,14 @@ class HomeCubit extends Cubit<HomeState> {
             }));
   }
 
-  void fetchStates() {
+  Future<void> fetchStates() async {
     appData.getStates().then((states) => states.fold(
           (l) => showToast(l),
           (statesList) => emit(state.copyWith(states: statesList)),
         ));
   }
 
-  void fetchAirports() async {
+  Future<void> fetchAirports() async {
     emit(state.copyWith(isFetchingAirports: true));
     final result = await appData.getAirPorts();
     result.fold(

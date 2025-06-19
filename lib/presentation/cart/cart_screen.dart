@@ -83,32 +83,6 @@ class CartScreen extends StatelessWidget {
                               ),
                             ),
                             onPressed: () {
-                              // final homeState = sl<HomeCubit>().state;
-                              // showModalBottomSheet(
-                              //   context: context,
-                              //   isScrollControlled: true,
-                              //   backgroundColor: Colors.transparent,
-                              //   builder: (context) => PaymentBottomSheet(
-                              //     email: homeState.user.email ?? "",
-                              //     state: homeState.selectedDeliveryType ==
-                              //             DeliveryType.pickup
-                              //         ? null
-                              //         : homeState.selectedState,
-                              //     stateZip: homeState.selectedDeliveryType ==
-                              //             DeliveryType.pickup
-                              //         ? null
-                              //         : homeState.zipCode,
-                              //     airportName: homeState.selectedDeliveryType ==
-                              //             DeliveryType.doorstep
-                              //         ? null
-                              //         : homeState.selectedAirport,
-                              //     totalAmount: cartCubit.totalPrice,
-                              //     onPaymentSuccess: (payment) {
-                              //       print('Payment completed successfully!');
-                              //       cartCubit.placeOrder(payment);
-                              //     },
-                              //   ),
-                              // );
                               cartCubit.placeOrder();
                             },
                             child: state.isLoading

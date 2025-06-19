@@ -1,4 +1,3 @@
-import 'package:farm_fresh_shop_app/helpers/utils.dart';
 import 'package:farm_fresh_shop_app/navigation/app_navigation.dart';
 import 'package:farm_fresh_shop_app/navigation/route_name.dart';
 import 'package:flutter/material.dart';
@@ -25,26 +24,30 @@ class HomeScreenHeader extends StatelessWidget {
           children: [
             Row(
               children: [
+                const SizedBox(width: 5),
+                InkWell(
+                  onTap: () {
+                    AppNavigation.push(RouteName.profile);
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      color: AppColor.primary.withOpacity(0.1),
+                      shape: BoxShape.circle,
+                    ),
+                    child: const Icon(
+                      Icons.person,
+                      color: AppColor.primary,
+                      size: 28,
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 10),
                 Text(
                   'Welcome, ${state.user.userName}!',
                   style: TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const SizedBox(width: 10),
-                InkWell(
-                  onTap: () async {
-                    final shouldProceed = await showConfirmationDialog(
-                        "Are you sure you want to logout?");
-                    if (shouldProceed) {
-                      AppNavigation.pushReplacement(RouteName.login);
-                    }
-                  },
-                  child: Icon(
-                    Icons.power_settings_new_outlined,
-                    color: Colors.red,
-                    size: 20,
                   ),
                 ),
                 const Spacer(),
@@ -90,7 +93,7 @@ class HomeScreenHeader extends StatelessWidget {
                 const SizedBox(width: 5),
               ],
             ),
-            const SizedBox(height: 5),
+            const SizedBox(height: 15),
             SizedBox(
               width: 150,
               child: Padding(

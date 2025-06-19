@@ -5,9 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class OrderCubit extends Cubit<OrderState> {
   final appData = FarmFreshAppData();
-  OrderCubit() : super(OrderState.initial()) {
-    fetchOrders();
-  }
+  OrderCubit() : super(OrderState.initial());
 
   fetchOrders() {
     emit(state.copyWith(isLoading: true));

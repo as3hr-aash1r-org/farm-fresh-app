@@ -1,3 +1,7 @@
+import 'package:farm_fresh_shop_app/initializer.dart';
+import 'package:farm_fresh_shop_app/presentation/home/home_cubit.dart';
+import 'package:farm_fresh_shop_app/presentation/order/order_cubit.dart';
+import 'package:farm_fresh_shop_app/presentation/profile/profile_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -6,8 +10,26 @@ import 'bottom_bar_container.dart';
 import 'bottom_bar_cubit.dart';
 import 'bottom_bar_state.dart';
 
-class BottomBar extends StatelessWidget {
+class BottomBar extends StatefulWidget {
   const BottomBar({super.key});
+
+  @override
+  State<BottomBar> createState() => _BottomBarState();
+}
+
+class _BottomBarState extends State<BottomBar> {
+  @override
+  void initState() {
+    super.initState();
+    fetchData();
+  }
+
+  Future<void> fetchData() async {
+    await sl<HomeCubit>()
+      ..getAllData();
+    sl<ProfileCubit>().getProfile();
+    sl<OrderCubit>().fetchOrders();
+  }
 
   @override
   Widget build(BuildContext context) {

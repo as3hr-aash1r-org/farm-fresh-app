@@ -29,7 +29,13 @@ class LoginScreenCubit extends Cubit<LoginScreenState> {
     authRepository.login(email, password).then(
           (response) => response.fold(
             (error) {
-              showToast(error);
+              if (error == "Otp Sent") {
+                AppNavigation.push(RouteName.verifyOtp,
+                    arguments: {"isRegister": true});
+                showToast("OTP sent successfully to $email");
+                return;
+              }
+              showToast(error.isEmpty ? "Invalid email or password" : error);
               emit(state.copyWith(isLoading: false));
             },
             (user) {

@@ -41,7 +41,7 @@ class LoginScreen extends StatelessWidget {
                     'Hello, Welcome to Farm Fresh Shop',
                     style: TextStyle(
                       fontWeight: FontWeight.w500,
-                      fontSize: 12.76,
+                      fontSize: 16,
                       color: Color(0xff595959),
                     ),
                   ),
@@ -64,13 +64,34 @@ class LoginScreen extends StatelessWidget {
                     text: "Log In",
                     onPressed: cubit.onLogin,
                   ),
-                  SizedBox(height: 20),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      TextButton(
+                        onPressed: () {
+                          AppNavigation.push(RouteName.forgetPassword);
+                        },
+                        child: Text(
+                          'Forget Password?',
+                          style: TextStyle(
+                              decorationColor: AppColor.green,
+                              decoration: TextDecoration.underline,
+                              color: AppColor.green,
+                              fontSize: 18,
+                              fontWeight: FontWeight.w500),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       const Text(
                         'Not Registered Yet?',
-                        style: TextStyle(color: Color(0xff979797)),
+                        style: TextStyle(
+                          color: Color(0xff979797),
+                          fontSize: 18,
+                        ),
                       ),
                       TextButton(
                         onPressed: () {
@@ -80,6 +101,7 @@ class LoginScreen extends StatelessWidget {
                           'Create an Account',
                           style: TextStyle(
                               color: AppColor.green,
+                              fontSize: 18,
                               fontWeight: FontWeight.w500),
                         ),
                       ),

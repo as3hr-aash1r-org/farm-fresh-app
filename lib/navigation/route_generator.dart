@@ -11,6 +11,7 @@ import 'package:farm_fresh_shop_app/presentation/cart/cart_screen.dart';
 import 'package:farm_fresh_shop_app/presentation/cart/components/order_success.dart';
 import 'package:farm_fresh_shop_app/presentation/cart/payment_view.dart';
 import 'package:farm_fresh_shop_app/presentation/on_boarding/on_boarding_screen.dart';
+import 'package:farm_fresh_shop_app/presentation/profile/profile_screen.dart';
 import 'package:flutter/material.dart';
 
 enum TransitionType {
@@ -30,9 +31,15 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     case RouteName.register:
       return getRoute(const RegisterScreen(), TransitionType.fade);
     case RouteName.verifyOtp:
-      return getRoute(VerifyOtp(), TransitionType.fade);
+      return getRoute(
+          VerifyOtp(
+            isRegister: args['isRegister'] ?? false,
+          ),
+          TransitionType.fade);
     case RouteName.forgetPassword:
       return getRoute(ForgetPassword(), TransitionType.fade);
+    case RouteName.profile:
+      return getRoute(ProfileScreen(), TransitionType.fade);
     case RouteName.resetPassword:
       return getRoute(ResetPassword(), TransitionType.fade);
     case RouteName.bottomBar:

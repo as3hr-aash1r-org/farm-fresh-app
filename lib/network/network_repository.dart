@@ -111,10 +111,10 @@ class NetworkRepository {
     if (response.statusCode == 200 || response.statusCode == 201) {
       return NetworkResponse(
         data: response.data,
+        message: message,
         status: response.statusCode ?? 200,
       );
     }
-
     message = response.data["detail"] == null
         ? parseNetworkMessage(response.data["detail"])
         : "Unknown Error Occured";

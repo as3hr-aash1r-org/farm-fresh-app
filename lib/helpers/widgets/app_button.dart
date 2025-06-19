@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class AppButton extends StatelessWidget {
   final String text;
-  final VoidCallback onPressed;
+  final void Function()? onPressed;
   final double height;
   final BorderRadius? borderRadius;
   final bool isLoading;
@@ -46,7 +46,7 @@ class AppButton extends StatelessWidget {
             : Text(
                 text,
                 style: const TextStyle(
-                  fontSize: 16,
+                  fontSize: 18,
                   fontWeight: FontWeight.bold,
                   color: Colors.white,
                 ),

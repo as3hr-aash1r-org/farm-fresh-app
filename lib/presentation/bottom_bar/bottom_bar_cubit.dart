@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:farm_fresh_shop_app/initializer.dart';
 import 'package:farm_fresh_shop_app/navigation/app_navigation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -18,6 +20,7 @@ class BottomBarCubit extends Cubit<BottomBarState> {
 
   @override
   Future<void> close() async {
+    log("DISPOSING INITIALIZER");
     await Initializer.dispose();
     return super.close();
   }

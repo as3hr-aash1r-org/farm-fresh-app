@@ -5,6 +5,8 @@ import 'package:farm_fresh_shop_app/helpers/styles/app_color.dart';
 import 'package:farm_fresh_shop_app/navigation/app_navigation.dart';
 import 'package:flutter/material.dart';
 
+import 'verify_phone_helpers.dart';
+
 List<T> parseList<T>(
   data,
   T Function(Map<String, dynamic>) fromJson,
@@ -48,7 +50,9 @@ Future<void> showToast(String message, {Color? color}) async {
               children: [
                 Flexible(
                   child: Text(
-                    message,
+                    message.isEmpty
+                        ? "Unknown Error Occured, We are working on it"
+                        : message,
                     style: const TextStyle(
                       fontSize: 15,
                       color: Colors.white,
@@ -115,3 +119,15 @@ Color get getRandomMangoColor => [
       AppColor.orange,
       AppColor.green,
     ][Random().nextInt(6)];
+
+extension TimerExtension on VerifyPhoneHelper {
+  void initializeTimer() {
+    Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (remainingSeconds > 0) {
+        remainingSeconds--;
+      } else {
+        timer.cancel();
+      }
+    });
+  }
+}

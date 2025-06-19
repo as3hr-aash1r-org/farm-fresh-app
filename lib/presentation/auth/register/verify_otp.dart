@@ -1,92 +1,122 @@
 import 'package:farm_fresh_shop_app/helpers/widgets/app_button.dart';
-import 'package:farm_fresh_shop_app/navigation/app_navigation.dart';
-import 'package:farm_fresh_shop_app/navigation/route_name.dart';
+import 'package:farm_fresh_shop_app/initializer.dart';
 import 'package:farm_fresh_shop_app/presentation/auth/register/register_screen_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../../../helpers/styles/app_color.dart';
-import '../../../helpers/styles/app_images.dart';
-import '../../../helpers/widgets/app_text_field.dart';
-import '../../../helpers/widgets/farm_fresh_asset.dart';
+import '../../../helpers/utils.dart';
+import '../../../helpers/widgets/otp_field.dart';
 import 'register_screen_cubit.dart';
 
 class VerifyOtp extends StatelessWidget {
-  const VerifyOtp({super.key});
+  const VerifyOtp({super.key, this.isRegister = false});
+  final bool isRegister;
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<RegisterScreenCubit>(
-      create: (context) => RegisterScreenCubit(),
-      child: Builder(builder: (context) {
-        final cubit = context.read<RegisterScreenCubit>();
-        return Scaffold(
-          resizeToAvoidBottomInset: false,
-          body: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Spacer(),
-                const Text(
-                  'Verify Otp',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 24,
-                  ),
+    return Builder(builder: (context) {
+      final cubit = sl<RegisterScreenCubit>();
+      cubit.initiateOtpScreen();
+      return Scaffold(
+        resizeToAvoidBottomInset: false,
+        body: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Spacer(),
+              const Text(
+                'Verify OTP',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 24,
                 ),
-                Text(
-                  'Hello, Welcome to Farm Fresh Shop',
-                  style: TextStyle(
-                    fontWeight: FontWeight.w500,
-                    fontSize: 12.76,
-                    color: Color(0xff595959),
-                  ),
+              ),
+              const Text(
+                'Hello, Welcome to Farm Fresh Shop',
+                style: TextStyle(
+                  fontWeight: FontWeight.w500,
+                  fontSize: 12.76,
+                  color: Color(0xff595959),
                 ),
-                SizedBox(height: 40),
-                AppTextField(
-                  onChanged: (val) => cubit.onEmailChange(val),
-                  hintText: "Otp",
-                  prefixIcon: FarmFreshAsset(image: AppImages.atTheRate),
+              ),
+              const SizedBox(height: 16),
+              const Text(
+                'Please enter the 5-digit verification code sent to your phone',
+                style: TextStyle(
+                  fontSize: 14,
+                  color: Color(0xff757575),
                 ),
-                const SizedBox(height: 40),
-                BlocBuilder<RegisterScreenCubit, RegisterScreenState>(
-                  builder: (context, state) {
-                    return AppButton(
-                      text: "Send",
-                      onPressed: () {
-                        cubit.onVerifyOtp();
-                      },
-                      isLoading: state.isLoading,
-                    );
-                  },
-                ),
-                SizedBox(height: 20),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    const Text(
-                      'Already have an account??',
-                      style: TextStyle(color: Color(0xff979797)),
-                    ),
-                    TextButton(
-                      onPressed: () {
-                        AppNavigation.pushReplacement(RouteName.login);
-                      },
-                      child: const Text(
-                        'Log In',
-                        style: TextStyle(
-                            color: AppColor.green, fontWeight: FontWeight.w500),
+              ),
+              const SizedBox(height: 40),
+              VerificationOtpInput(
+                codeValues: cubit.phoneHelper.verificationCode,
+                focusNodes: cubit.phoneHelper.focusNodes,
+                onChanged: cubit.phoneHelper.updateVerificationDigit,
+              ),
+              const SizedBox(height: 24),
+              BlocBuilder<RegisterScreenCubit, RegisterScreenState>(
+                bloc: cubit,
+                builder: (context, state) {
+                  return Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        state.canResendOtp
+                            ? "Didn't receive code? "
+                            : "Resend code in ",
+                        style: const TextStyle(
+                          fontSize: 14,
+                          color: Color(0xff757575),
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-                Spacer(),
-              ],
-            ),
+                      if (!state.canResendOtp)
+                        Text(
+                          cubit.phoneHelper.getFormattedTime(),
+                          style: const TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                            color: Color(0xff4CAF50),
+                          ),
+                        ),
+                      if (state.canResendOtp)
+                        GestureDetector(
+                          onTap: state.isResending ? null : cubit.onResendOtp,
+                          child: Text(
+                            state.isResending ? "Sending..." : "Resend",
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                              color: state.isResending
+                                  ? const Color(0xff9E9E9E)
+                                  : const Color(0xff4CAF50),
+                              decoration: TextDecoration.underline,
+                            ),
+                          ),
+                        ),
+                    ],
+                  );
+                },
+              ),
+              const SizedBox(height: 40),
+              BlocBuilder<RegisterScreenCubit, RegisterScreenState>(
+                bloc: cubit,
+                builder: (context, state) {
+                  return AppButton(
+                    text: "Verify",
+                    onPressed: cubit.phoneHelper.isVerificationCodeComplete()
+                        ? () => cubit.onVerifyOtp(isRegister: isRegister)
+                        : () {
+                            showToast("Please enter complete OTP");
+                          },
+                    isLoading: state.isLoading,
+                  );
+                },
+              ),
+              const Spacer(),
+            ],
           ),
-        );
-      }),
-    );
+        ),
+      );
+    });
   }
 }
