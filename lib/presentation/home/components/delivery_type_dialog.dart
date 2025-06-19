@@ -97,7 +97,7 @@ class _DeliveryTypeDialogState extends State<DeliveryTypeDialog>
                       ),
                       const SizedBox(height: 16),
                       const Text(
-                        "🥭 Select Delivery Type",
+                        "🥭 Select Airport Location",
                         style: TextStyle(
                           fontSize: 22,
                           fontWeight: FontWeight.bold,
@@ -125,13 +125,13 @@ class _DeliveryTypeDialogState extends State<DeliveryTypeDialog>
                         homeCubit,
                       ),
                       const SizedBox(height: 12),
-                      _buildDeliveryOption(
-                        DeliveryType.doorstep,
-                        "🏠 Doorstep",
-                        "Delivered to your home",
-                        Icons.home_rounded,
-                        homeCubit,
-                      ),
+                      // _buildDeliveryOption(
+                      //   DeliveryType.doorstep,
+                      //   "🏠 Doorstep",
+                      //   "Delivered to your home",
+                      //   Icons.home_rounded,
+                      //   homeCubit,
+                      // ),
 
                       // Conditional fields with animation
                       AnimatedContainer(
@@ -141,25 +141,25 @@ class _DeliveryTypeDialogState extends State<DeliveryTypeDialog>
                         child: Column(
                           children: [
                             // Doorstep flow
-                            if (_tempSelectedType == DeliveryType.doorstep) ...[
-                              const SizedBox(height: 24),
-                              _buildEnhancedDropdown(
-                                value: state.selectedState,
-                                items: state.states,
-                                labelText: "Select State",
-                                hintText: "Choose your state",
-                                icon: Icons.location_on_rounded,
-                                onChanged: (val) =>
-                                    homeCubit.updateSelectedState(val!),
-                              ),
-                              const SizedBox(height: 16),
-                              _buildEnhancedTextField(
-                                hintText: "Enter Zip Code",
-                                icon: Icons.pin_drop_rounded,
-                                keyboardType: TextInputType.number,
-                                onChanged: homeCubit.updateZipCode,
-                              ),
-                            ],
+                            // if (_tempSelectedType == DeliveryType.doorstep) ...[
+                            //   const SizedBox(height: 24),
+                            //   _buildEnhancedDropdown(
+                            //     value: state.selectedState,
+                            //     items: state.states,
+                            //     labelText: "Select State",
+                            //     hintText: "Choose your state",
+                            //     icon: Icons.location_on_rounded,
+                            //     onChanged: (val) =>
+                            //         homeCubit.updateSelectedState(val!),
+                            //   ),
+                            //   const SizedBox(height: 16),
+                            //   _buildEnhancedTextField(
+                            //     hintText: "Enter Zip Code",
+                            //     icon: Icons.pin_drop_rounded,
+                            //     keyboardType: TextInputType.number,
+                            //     onChanged: homeCubit.updateZipCode,
+                            //   ),
+                            // ],
 
                             // Pickup flow
                             if (_tempSelectedType == DeliveryType.pickup) ...[
@@ -445,48 +445,48 @@ class _DeliveryTypeDialogState extends State<DeliveryTypeDialog>
     );
   }
 
-  Widget _buildEnhancedTextField({
-    required String hintText,
-    required IconData icon,
-    required TextInputType keyboardType,
-    required Function(String) onChanged,
-  }) {
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(
-            color: AppColor.primary.withOpacity(0.1),
-            blurRadius: 8,
-            offset: const Offset(0, 2),
-          ),
-        ],
-      ),
-      child: TextField(
-        decoration: InputDecoration(
-          hintText: hintText,
-          prefixIcon: Icon(icon, color: AppColor.primary),
-          filled: true,
-          fillColor: Colors.white,
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(16),
-            borderSide: BorderSide.none,
-          ),
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(16),
-            borderSide: BorderSide(color: Colors.grey[300]!),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(16),
-            borderSide: const BorderSide(color: AppColor.primary, width: 2),
-          ),
-          hintStyle: TextStyle(color: Colors.grey[500]),
-        ),
-        keyboardType: keyboardType,
-        onChanged: onChanged,
-      ),
-    );
-  }
+  // Widget _buildEnhancedTextField({
+  //   required String hintText,
+  //   required IconData icon,
+  //   required TextInputType keyboardType,
+  //   required Function(String) onChanged,
+  // }) {
+  //   return Container(
+  //     decoration: BoxDecoration(
+  //       borderRadius: BorderRadius.circular(16),
+  //       boxShadow: [
+  //         BoxShadow(
+  //           color: AppColor.primary.withOpacity(0.1),
+  //           blurRadius: 8,
+  //           offset: const Offset(0, 2),
+  //         ),
+  //       ],
+  //     ),
+  //     child: TextField(
+  //       decoration: InputDecoration(
+  //         hintText: hintText,
+  //         prefixIcon: Icon(icon, color: AppColor.primary),
+  //         filled: true,
+  //         fillColor: Colors.white,
+  //         border: OutlineInputBorder(
+  //           borderRadius: BorderRadius.circular(16),
+  //           borderSide: BorderSide.none,
+  //         ),
+  //         enabledBorder: OutlineInputBorder(
+  //           borderRadius: BorderRadius.circular(16),
+  //           borderSide: BorderSide(color: Colors.grey[300]!),
+  //         ),
+  //         focusedBorder: OutlineInputBorder(
+  //           borderRadius: BorderRadius.circular(16),
+  //           borderSide: const BorderSide(color: AppColor.primary, width: 2),
+  //         ),
+  //         hintStyle: TextStyle(color: Colors.grey[500]),
+  //       ),
+  //       keyboardType: keyboardType,
+  //       onChanged: onChanged,
+  //     ),
+  //   );
+  // }
 
   bool _canConfirm() {
     if (_tempSelectedType == DeliveryType.doorstep) {

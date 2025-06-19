@@ -188,9 +188,11 @@ class ProductCard extends StatelessWidget {
                         onTap: isOutOfStock
                             ? null
                             : () async {
+                                final homeState = sl<HomeCubit>().state;
                                 final deliveryType =
-                                    sl<HomeCubit>().state.selectedDeliveryType;
-                                if (deliveryType == DeliveryType.none) {
+                                    homeState.selectedDeliveryType;
+                                if (deliveryType == DeliveryType.pickup &&
+                                    homeState.selectedAirport == null) {
                                   await showDialog(
                                     context: context,
                                     builder: (_) => const DeliveryTypeDialog(),
