@@ -8,4 +8,5 @@ class RouteName {
   static const bottomBar = '/bottomBar';
   static const cart = '/cart';
   static const successOrder = '/succes-order';
+  static const paymentWebView = '/payment-webview';
 }

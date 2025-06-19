@@ -10,7 +10,6 @@ import '../../cart/cart_cubit.dart';
 import '../../cart/cart_state.dart';
 import '../home_cubit.dart';
 import '../home_state.dart';
-import 'delivery_type_dialog.dart';
 
 class HomeScreenHeader extends StatelessWidget {
   const HomeScreenHeader({super.key});
@@ -92,80 +91,76 @@ class HomeScreenHeader extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 5),
-            Row(
-              children: [
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.only(bottom: 8),
-                    child: InkWell(
-                      onTap: () async {
-                        final cartCubit = sl<CartCubit>();
-                        final homeCubit = sl<HomeCubit>();
-                        final currentDeliveryType =
-                            homeCubit.state.selectedDeliveryType;
+            SizedBox(
+              width: 150,
+              child: Padding(
+                padding: const EdgeInsets.only(bottom: 8),
+                child: InkWell(
+                  onTap: () async {
+                    // final cartCubit = sl<CartCubit>();
+                    // final homeCubit = sl<HomeCubit>();
+                    // final currentDeliveryType =
+                    //     homeCubit.state.selectedDeliveryType;
 
-                        final hasCartItems =
-                            cartCubit.state.products.isNotEmpty;
+                    // final hasCartItems =
+                    //     cartCubit.state.products.isNotEmpty;
 
-                        bool shouldProceed = true;
+                    // bool shouldProceed = true;
 
-                        if (currentDeliveryType != DeliveryType.none &&
-                            hasCartItems) {
-                          shouldProceed = await showConfirmationDialog(
-                            "Changing the delivery type will clear your cart. Do you want to continue?",
-                          );
-                          if (shouldProceed) {
-                            cartCubit.clearCart();
-                          }
-                        }
+                    // if (currentDeliveryType != DeliveryType.none &&
+                    //     hasCartItems) {
+                    //   shouldProceed = await showConfirmationDialog(
+                    //     "Changing the delivery type will clear your cart. Do you want to continue?",
+                    //   );
+                    //   if (shouldProceed) {
+                    //     cartCubit.clearCart();
+                    //   }
+                    // }
 
-                        if (shouldProceed) {
-                          showDialog(
-                            context: context,
-                            builder: (_) => const DeliveryTypeDialog(),
-                          );
-                        }
-                      },
-                      child: InputDecorator(
-                        decoration: InputDecoration(
-                          filled: true,
-                          contentPadding: EdgeInsets.all(2),
-                          fillColor: Colors.grey[100],
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
-                            borderSide: BorderSide(
-                              color: state.selectedDeliveryType ==
-                                      DeliveryType.none
-                                  ? Colors.grey[100]!
-                                  : AppColor.darkBlue,
-                            ),
+                    // if (shouldProceed) {
+                    //   showDialog(
+                    //     context: context,
+                    //     builder: (_) => const DeliveryTypeDialog(),
+                    //   );
+                    // }
+                  },
+                  child: Center(
+                    child: InputDecorator(
+                      decoration: InputDecoration(
+                        filled: true,
+                        contentPadding: EdgeInsets.all(2),
+                        fillColor: Colors.grey[100],
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: BorderSide(
+                            color: AppColor.darkBlue,
                           ),
                         ),
-                        child: Row(
-                          children: [
-                            SizedBox(width: 5),
-                            Text(
-                              state.selectedDeliveryType == DeliveryType.none
-                                  ? "Select delivery type"
-                                  : (state.selectedDeliveryType ==
-                                          DeliveryType.pickup
-                                      ? "Pickup"
-                                      : "Doorstep"),
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black,
-                              ),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            "Delivery Type:",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
                             ),
-                            const Spacer(),
-                            Icon(Icons.arrow_drop_down, color: Colors.black),
-                          ],
-                        ),
+                          ),
+                          SizedBox(width: 5),
+                          Text(
+                            "Pickup",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ),
                 ),
-                Spacer(),
-              ],
+              ),
             ),
             const SizedBox(height: 5),
             TextField(

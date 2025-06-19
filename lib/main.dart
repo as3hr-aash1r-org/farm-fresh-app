@@ -7,3 +7,6 @@ Future<void> main() async {
   await Initializer.init();
   runApp(const FarmFreshApp());
 }
+
+
+// bundle id: com.farmfreshshop.app

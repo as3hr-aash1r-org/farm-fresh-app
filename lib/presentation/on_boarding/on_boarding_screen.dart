@@ -289,9 +289,10 @@ class _OnboardingScreenState extends State<OnboardingScreen>
     return Column(
       children: [
         const Text(
-          "MANGO",
+          "Farm Fresh Shop",
+          textAlign: TextAlign.center,
           style: TextStyle(
-            fontSize: 42,
+            fontSize: 35,
             fontWeight: FontWeight.w900,
             color: Colors.white,
             letterSpacing: 8,
@@ -302,27 +303,6 @@ class _OnboardingScreenState extends State<OnboardingScreen>
                 blurRadius: 8,
               ),
             ],
-          ),
-        ),
-        const SizedBox(height: 4),
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-          decoration: BoxDecoration(
-            color: Colors.white.withOpacity(0.2),
-            borderRadius: BorderRadius.circular(20),
-            border: Border.all(
-              color: Colors.white.withOpacity(0.3),
-              width: 1,
-            ),
-          ),
-          child: const Text(
-            "FARM FRESH",
-            style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.w600,
-              color: Colors.white,
-              letterSpacing: 3,
-            ),
           ),
         ),
       ],

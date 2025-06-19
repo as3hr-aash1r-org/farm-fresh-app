@@ -1,13 +1,10 @@
 import 'package:farm_fresh_shop_app/helpers/styles/app_color.dart';
-import 'package:farm_fresh_shop_app/presentation/home/home_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../initializer.dart';
-import '../home/home_cubit.dart';
 import 'components/cart_product_container.dart';
 import 'cart_cubit.dart';
 import 'cart_state.dart';
-import 'components/payment/payment_sheet.dart' show PaymentBottomSheet;
 
 class CartScreen extends StatelessWidget {
   const CartScreen({super.key});
@@ -86,32 +83,33 @@ class CartScreen extends StatelessWidget {
                               ),
                             ),
                             onPressed: () {
-                              final homeState = sl<HomeCubit>().state;
-                              showModalBottomSheet(
-                                context: context,
-                                isScrollControlled: true,
-                                backgroundColor: Colors.transparent,
-                                builder: (context) => PaymentBottomSheet(
-                                  email: homeState.user.email ?? "",
-                                  state: homeState.selectedDeliveryType ==
-                                          DeliveryType.pickup
-                                      ? null
-                                      : homeState.selectedState,
-                                  stateZip: homeState.selectedDeliveryType ==
-                                          DeliveryType.pickup
-                                      ? null
-                                      : homeState.zipCode,
-                                  airportName: homeState.selectedDeliveryType ==
-                                          DeliveryType.doorstep
-                                      ? null
-                                      : homeState.selectedAirport,
-                                  totalAmount: cartCubit.totalPrice,
-                                  onPaymentSuccess: (payment) {
-                                    print('Payment completed successfully!');
-                                    cartCubit.placeOrder(payment);
-                                  },
-                                ),
-                              );
+                              // final homeState = sl<HomeCubit>().state;
+                              // showModalBottomSheet(
+                              //   context: context,
+                              //   isScrollControlled: true,
+                              //   backgroundColor: Colors.transparent,
+                              //   builder: (context) => PaymentBottomSheet(
+                              //     email: homeState.user.email ?? "",
+                              //     state: homeState.selectedDeliveryType ==
+                              //             DeliveryType.pickup
+                              //         ? null
+                              //         : homeState.selectedState,
+                              //     stateZip: homeState.selectedDeliveryType ==
+                              //             DeliveryType.pickup
+                              //         ? null
+                              //         : homeState.zipCode,
+                              //     airportName: homeState.selectedDeliveryType ==
+                              //             DeliveryType.doorstep
+                              //         ? null
+                              //         : homeState.selectedAirport,
+                              //     totalAmount: cartCubit.totalPrice,
+                              //     onPaymentSuccess: (payment) {
+                              //       print('Payment completed successfully!');
+                              //       cartCubit.placeOrder(payment);
+                              //     },
+                              //   ),
+                              // );
+                              cartCubit.placeOrder();
                             },
                             child: state.isLoading
                                 ? const CircularProgressIndicator(

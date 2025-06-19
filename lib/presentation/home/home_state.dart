@@ -26,7 +26,7 @@ class HomeState {
     this.isVerifyingZip = false,
     this.isFetchingAirports = false,
     required this.products,
-    this.selectedDeliveryType = DeliveryType.none,
+    this.selectedDeliveryType = DeliveryType.pickup,
     this.selectedState,
     this.zipCode,
     this.states = const [],

@@ -96,4 +96,14 @@ class FarmFreshAppData {
     final orders = parseList(response.data, OrderModel.fromJson);
     return right(orders);
   }
+
+  Future<Either<String, String>> checkOut(
+      {required String amount, required String airportName}) async {
+    final response = await networkRepository.get(
+        url: "/payments/checkout",
+        extraQuery: {"amount": amount, "airport_name": airportName});
+    if (response.failed) return left(response.message);
+    final url = response.data["checkout_url"] as String;
+    return right(url);
+  }
 }

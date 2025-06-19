@@ -1,5 +1,4 @@
 import 'package:farm_fresh_shop_app/data/app_data/app_data.dart';
-import 'package:farm_fresh_shop_app/data/model/order_model.dart';
 import 'package:farm_fresh_shop_app/data/model/product_json.dart';
 import 'package:farm_fresh_shop_app/helpers/utils.dart';
 import 'package:farm_fresh_shop_app/navigation/route_name.dart';
@@ -63,33 +62,54 @@ class CartCubit extends Cubit<CartState> {
   double get totalPrice =>
       state.products.fold(0.0, (sum, product) => sum + (product.price ?? 0.0));
 
-  void placeOrder(PaymentModel payment) {
+  void placeOrder() {
     final homeState = sl<HomeCubit>().state;
-    final order = OrderModel(
-      amount: totalPrice,
-      deliveryType: homeState.selectedDeliveryType.name.toLowerCase(),
-      shippingState: homeState.selectedState,
-      shippingZipCode: homeState.zipCode,
-      airportName: homeState.selectedAirport,
-      items: state.products
-          .map((product) => OrderItem(
-                productId: product.id!,
-                quantity: product.quantity,
-                totalPrice: product.price!,
-              ))
-          .toList(),
-      payment: payment,
-    );
     emit(state.copyWith(isLoading: true));
-    appData.createOrder(order: order).then((response) => response.fold((l) {
-          emit(state.copyWith(isLoading: false));
-          showToast(
-              "Failed to place order right now\nre-check your card number or other details");
-        }, (r) {
-          AppNavigation.pushReplacement(RouteName.successOrder, arguments: {
-            "amount": totalPrice,
-          });
-        }));
+    appData
+        .checkOut(
+          amount: totalPrice.toString(),
+          airportName: homeState.selectedAirport ?? "",
+        )
+        .then(
+          (response) => response.fold(
+            (error) {
+              emit(state.copyWith(isLoading: false));
+              showToast(
+                  "Failed to place order right now\nre-check your card number or other details");
+            },
+            (url) {
+              emit(state.copyWith(isLoading: false));
+              AppNavigation.pushReplacement(RouteName.paymentWebView,
+                  arguments: {
+                    "url": url,
+                  });
+            },
+          ),
+        );
+    // final order = OrderModel(
+    //   amount: totalPrice,
+    //   deliveryType: homeState.selectedDeliveryType.name.toLowerCase(),
+    //   shippingState: homeState.selectedState,
+    //   shippingZipCode: homeState.zipCode,
+    //   airportName: homeState.selectedAirport,
+    //   items: state.products
+    //       .map((product) => OrderItem(
+    //             productId: product.id!,
+    //             quantity: product.quantity,
+    //             totalPrice: product.price!,
+    //           ))
+    //       .toList(),
+    //   payment: payment,
+    // );
+    // appData.createOrder(order: order).then((response) => response.fold((l) {
+    //       emit(state.copyWith(isLoading: false));
+    //       showToast(
+    //           "Failed to place order right now\nre-check your card number or other details");
+    //     }, (r) {
+    //       AppNavigation.pushReplacement(RouteName.successOrder, arguments: {
+    //         "amount": totalPrice,
+    //       });
+    //     }));
   }
 
   void setEmpty() => emit(CartState.empty());
