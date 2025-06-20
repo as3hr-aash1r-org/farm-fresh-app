@@ -1,3 +1,4 @@
+import 'package:farm_fresh_shop_app/navigation/app_navigation.dart';
 import 'package:farm_fresh_shop_app/presentation/profile/profile_cubit.dart';
 import 'package:farm_fresh_shop_app/presentation/profile/profile_state.dart';
 import 'package:flutter/material.dart';
@@ -28,7 +29,12 @@ class ProfileScreen extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              leading: Icon(Icons.arrow_back_ios),
+              leading: InkWell(
+                onTap: () => AppNavigation.pop(),
+                child: Icon(
+                  Icons.arrow_back_ios,
+                ),
+              ),
               centerTitle: true,
               iconTheme: const IconThemeData(
                 color: Color(0xff1E1E1E),
