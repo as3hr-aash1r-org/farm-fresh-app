@@ -13,6 +13,9 @@ import 'network/network_repository.dart';
 final networkRepository = NetworkRepository();
 final localStorageRepository = LocalStorageRepository();
 final sl = GetIt.instance;
+Future<bool> get isGuestMode => localStorageRepository
+    .getValue("token")
+    .then((response) => response.fold((error) => true, (token) => false));
 
 class Initializer {
   static Future<void> init() async {

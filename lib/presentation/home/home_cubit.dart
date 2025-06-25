@@ -24,8 +24,12 @@ class HomeCubit extends Cubit<HomeState> {
   }
 
   Future<void> initHome() async {
-    final user = await localStorageRepository.getUser();
-    emit(state.copyWith(user: user));
+    if (await isGuestMode) {
+      emit(state.copyWith(isGuestMode: true));
+    } else {
+      final user = await localStorageRepository.getUser();
+      emit(state.copyWith(user: user));
+    }
   }
 
   Future<void> fetchData({String? search}) async {

@@ -4,7 +4,6 @@ import 'package:farm_fresh_shop_app/helpers/styles/app_color.dart'
 import 'package:farm_fresh_shop_app/helpers/styles/app_images.dart';
 import 'package:farm_fresh_shop_app/helpers/utils.dart';
 import 'package:farm_fresh_shop_app/helpers/widgets/farm_fresh_asset.dart';
-import 'package:farm_fresh_shop_app/presentation/cart/cart_cubit.dart';
 import 'package:farm_fresh_shop_app/presentation/home/home_cubit.dart';
 import 'package:flutter/material.dart';
 import '../../../initializer.dart';
@@ -188,6 +187,17 @@ class ProductCard extends StatelessWidget {
                         onTap: isOutOfStock
                             ? null
                             : () async {
+                                if (await isGuestMode) {
+                                  showConfirmationDialog(
+                                    "Please login to add to cart",
+                                    onYes: () async {
+                                      await Initializer.dispose();
+                                    },
+                                    noText: "Cancel",
+                                    yesText: "Login",
+                                  );
+                                  return;
+                                }
                                 final homeState = sl<HomeCubit>().state;
                                 final deliveryType =
                                     homeState.selectedDeliveryType;
@@ -198,19 +208,11 @@ class ProductCard extends StatelessWidget {
                                     builder: (_) => const DeliveryTypeDialog(),
                                   );
                                 } else {
-                                  final cartCubit = sl<CartCubit>();
-                                  final existingIndex =
-                                      cartCubit.state.products.length > 0;
-                                  if (existingIndex) {
-                                    showToast("Cart already has items");
-                                    return;
-                                  } else {
-                                    await showDialog(
-                                      context: context,
-                                      builder: (_) => QuantitySelectorDialog(
-                                          product: product),
-                                    );
-                                  }
+                                  await showDialog(
+                                    context: context,
+                                    builder: (_) => QuantitySelectorDialog(
+                                        product: product),
+                                  );
                                 }
                               },
                         child: Container(

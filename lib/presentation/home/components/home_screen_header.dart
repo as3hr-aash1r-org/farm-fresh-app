@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../helpers/styles/app_color.dart';
 import '../../../helpers/styles/app_images.dart';
+import '../../../helpers/utils.dart';
 import '../../../initializer.dart';
 import '../../cart/cart_cubit.dart';
 import '../../cart/cart_state.dart';
@@ -27,7 +28,19 @@ class HomeScreenHeader extends StatelessWidget {
                 const SizedBox(width: 5),
                 InkWell(
                   onTap: () {
-                    AppNavigation.push(RouteName.profile);
+                    if (state.isGuestMode) {
+                      showConfirmationDialog(
+                        "Please login to continue",
+                        onYes: () async {
+                          await Initializer.dispose();
+                        },
+                        noText: "Cancel",
+                        yesText: "Login",
+                      );
+                      return;
+                    } else {
+                      AppNavigation.push(RouteName.profile);
+                    }
                   },
                   child: Container(
                     padding: const EdgeInsets.all(8),
@@ -43,11 +56,17 @@ class HomeScreenHeader extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(width: 10),
-                Text(
-                  'Welcome, ${state.user.userName}!',
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
+                SizedBox(
+                  width: 200,
+                  child: Text(
+                    state.isGuestMode
+                        ? "Welcome, Guest!"
+                        : 'Welcome, ${state.user.userName}!',
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    maxLines: 2,
                   ),
                 ),
                 const Spacer(),

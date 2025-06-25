@@ -17,14 +17,18 @@ class CartCubit extends Cubit<CartState> {
     final existingIndex = state.products.indexWhere((b) => b.id == product.id);
     if (existingIndex == -1) {
       emit(state.copyWith(products: [...state.products, product]));
+    } else {
+      increaseQuantity(product);
     }
   }
 
   void increaseQuantity(ProductModel product) {
     final updatedProducts = state.products
         .map((b) {
-          if (b.name == product.name) {
-            return b.copyWith(quantity: b.quantity + 1);
+          if (b.id == product.id) {
+            return b.copyWith(
+                quantity: b.quantity + product.quantity,
+                price: b.price! + product.price!);
           }
           return b;
         })

@@ -27,8 +27,10 @@ class _BottomBarState extends State<BottomBar> {
   Future<void> fetchData() async {
     await sl<HomeCubit>()
       ..getAllData();
-    sl<ProfileCubit>().getProfile();
-    sl<OrderCubit>().fetchOrders();
+    if (!await isGuestMode) {
+      sl<ProfileCubit>().getProfile();
+      sl<OrderCubit>().fetchOrders();
+    }
   }
 
   @override

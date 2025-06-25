@@ -70,7 +70,11 @@ Future<void> showToast(String message, {Color? color}) async {
   );
 }
 
-Future<bool> showConfirmationDialog(String title) async {
+Future<bool> showConfirmationDialog(String title,
+    {String? yesText,
+    String? noText,
+    VoidCallback? onYes,
+    VoidCallback? onNo}) async {
   final context = AppNavigation.context;
   return await showDialog<bool>(
         context: context,
@@ -87,8 +91,9 @@ Future<bool> showConfirmationDialog(String title) async {
                 )),
             actions: [
               TextButton(
-                onPressed: () => Navigator.of(context).pop(false),
-                child: const Text('No',
+                onPressed: () =>
+                    onNo != null ? onNo() : Navigator.of(context).pop(false),
+                child: Text(noText ?? 'No',
                     style: TextStyle(
                       fontSize: 14,
                       color: AppColor.primary,
@@ -96,8 +101,9 @@ Future<bool> showConfirmationDialog(String title) async {
                     )),
               ),
               TextButton(
-                onPressed: () => Navigator.of(context).pop(true),
-                child: const Text('Yes',
+                onPressed: () =>
+                    onYes != null ? onYes() : Navigator.of(context).pop(true),
+                child: Text(yesText ?? 'Yes',
                     style: TextStyle(
                       fontSize: 14,
                       color: AppColor.primary,

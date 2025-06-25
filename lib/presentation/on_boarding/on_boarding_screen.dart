@@ -128,7 +128,7 @@ class _OnboardingScreenState extends State<OnboardingScreen>
     if (mounted) {
       localStorageRepository.getValue("token").then(
             (response) => response.fold(
-              (error) => AppNavigation.pushReplacement(RouteName.login),
+              (error) => AppNavigation.pushReplacement(RouteName.bottomBar),
               (token) => AppNavigation.pushReplacement(RouteName.bottomBar),
             ),
           );

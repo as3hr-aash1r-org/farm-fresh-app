@@ -56,7 +56,7 @@ class _QuantitySelectorDialogState extends State<QuantitySelectorDialog>
 
   List<String> getQuantities(DeliveryType type) {
     if (type == DeliveryType.pickup) {
-      return ['8', '12', '16', '20', '24'];
+      return ['4', '8', '12', '16', '20', '24'];
     } else {
       return ['2', '4'];
     }
@@ -95,8 +95,6 @@ class _QuantitySelectorDialogState extends State<QuantitySelectorDialog>
           quantity: int.tryParse(selectedQuantity ?? "0"),
         );
         sl<CartCubit>().addMangoToCart(updatedProduct);
-
-        // Success feedback
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             content: Text("🥭 Added to cart successfully!"),

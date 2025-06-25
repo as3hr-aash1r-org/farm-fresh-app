@@ -73,7 +73,7 @@ class RegisterScreen extends StatelessWidget {
                     if (p0.length < 3) {
                       return "User name must be at least 3 characters";
                     }
-                    if (p0.length > 8) {
+                    if (p0.length > 10) {
                       return "User name cannot exceed 8 characters";
                     }
                     return null;

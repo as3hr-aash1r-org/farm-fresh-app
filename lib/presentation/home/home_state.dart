@@ -6,6 +6,7 @@ enum DeliveryType { none, pickup, doorstep }
 class HomeState {
   final bool isLoading;
   final bool isSearching;
+  final bool isGuestMode;
   final List<ProductModel> products;
   final UserModel user;
   final DeliveryType selectedDeliveryType;
@@ -22,6 +23,7 @@ class HomeState {
     this.selectedAirport,
     this.isSearching = false,
     this.isLoading = true,
+    this.isGuestMode = false,
     required this.user,
     this.isVerifyingZip = false,
     this.isFetchingAirports = false,
@@ -47,8 +49,10 @@ class HomeState {
     List<String>? states,
     List<String>? airports,
     String? selectedAirport,
+    bool? isGuestMode,
   }) {
     return HomeState(
+      isGuestMode: isGuestMode ?? this.isGuestMode,
       isSearching: isSearching ?? this.isSearching,
       isLoading: isLoading ?? this.isLoading,
       products: products ?? this.products,
