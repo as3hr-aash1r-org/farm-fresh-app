@@ -8,6 +8,7 @@ class AppImages {
   static const langra = "$baseDir/langra.png";
   static const ratol = "$baseDir/ratol.jpeg";
   static const sindhri = "$baseDir/sindhri.png";
+  static const splash = "$baseDir/splash.png";
 
   static const orderBasket = "$baseDir/order_basket.svg";
   static const success = "$baseDir/success.json";

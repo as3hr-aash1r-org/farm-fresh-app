@@ -1,3 +1,4 @@
+import 'package:farm_fresh_shop_app/helpers/styles/app_images.dart';
 import 'package:farm_fresh_shop_app/initializer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -195,7 +196,10 @@ class _OnboardingScreenState extends State<OnboardingScreen>
                         scale: _logoScale.value,
                         child: Transform.rotate(
                           angle: _logoRotation.value,
-                          child: _buildAnimatedLogo(),
+                          child: Image.asset(
+                            AppImages.splash,
+                            scale: 4.0,
+                          ),
                         ),
                       ),
 
