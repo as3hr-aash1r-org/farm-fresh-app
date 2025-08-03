@@ -10,5 +10,6 @@ void main() {
 }
 
 
-/// bundle id: {{com.farmfreshshop.app}}  for both android and IOS (please verify beforeHand that all necessary files has this same bundleId, I changed it from com.farmfreshshop.farmFreshShopApp previosuly).
+/// bundle id: {{com.farmfreshshop.app}}  for Android.
+/// bundle id: {{com.freshFarmShop.app}} for IOS.
 /// no firebase is used in this app!!
