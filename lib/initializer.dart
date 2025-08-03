@@ -27,10 +27,10 @@ class Initializer {
   }
 
   static Future<void> dispose() async {
-    AppNavigation.pushReplacement(RouteName.login);
+    await sl.reset(dispose: true);
+    init();
     localStorageRepository.deleteValue("token");
     localStorageRepository.deleteValue("user");
-    sl<CartCubit>().setEmpty();
-    sl<HomeCubit>().setEmpty();
+    AppNavigation.pushAndRemoveUntil(RouteName.login);
   }
 }

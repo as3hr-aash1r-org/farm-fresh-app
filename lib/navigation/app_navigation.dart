@@ -28,6 +28,15 @@ class AppNavigation {
     );
   }
 
+  static void pushAndRemoveUntil(String routeName, {arguments}) {
+    Navigator.pushNamedAndRemoveUntil(
+      context,
+      routeName,
+      (route) => false,
+      arguments: arguments,
+    );
+  }
+
   static getToLast() {
     Navigator.popUntil(context, (route) => route.isFirst);
   }

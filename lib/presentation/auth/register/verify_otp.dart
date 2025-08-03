@@ -40,8 +40,8 @@ class VerifyOtp extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 16),
-              const Text(
-                'Please enter the 5-digit verification code sent to your phone',
+              Text(
+                'Please enter the 5-digit verification code sent to ${cubit.email}',
                 style: TextStyle(
                   fontSize: 14,
                   color: Color(0xff757575),
